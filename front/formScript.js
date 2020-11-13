@@ -26,13 +26,14 @@ window.onload = () => {
             name: selectedName,
             type: "fire"
         };
+        //source:  https://www.freecodecamp.org/news/javascript-fetch-api-tutorial-with-js-fetch-post-and-header-examples/
         fetch('http://localhost:3000/api/pokemon', {
             method: "POST",
             body: JSON.stringify(pokemon),
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
             }
-        })
+        });
     }
 
     document.getElementById('submitButton').addEventListener('click', addPokemon);
