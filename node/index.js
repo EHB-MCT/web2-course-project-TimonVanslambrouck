@@ -1,9 +1,28 @@
+const bodyParser = require('body-parser');
 const express = require("express");
+const cors = require('cors');
 const app = express();
+app.use(cors());
 const pokeRouter = express.Router();
 const port = process.env.PORT || 3000;
 let db = null;
 let collection = null;
+
+// MongoDB
+
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://admin:admin@cluster0.9ryim.mongodb.net/pokemonList?retryWrites=true&w=majority";
+const DB_NAME = "pokemonList";
+const client = new MongoClient(uri, {
+    useNewUrlParser: true
+});
+
+// BODYPARSER
+
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
 
 /* 
     GET /pokemon = Get all pokemon
@@ -17,18 +36,21 @@ let collection = null;
     DELETE /pokemon = delete a pokemon, based on id
 */
 
-pokeRouter.route('/pokemon')
-    .get((req, res) => {
-        collection = db.collection("pokemonList");
-        const result = collection.find().toArray();
+pokeRouter.route('/pokemon').get((req, res) => {
+    collection = db.collection("pokemon");
+    collection.find({}).toArray((err, result) => {
+        if (err) {
+            return res.status(500).send(err);
+        }
         res.json(result);
-        collection.find({}).toArray((error, result) => {
-            if (error) {
-                throw error;
-            }
-            // res.json(result);
-        });
     });
+}).post((req, res) => {
+    collection = db.collection("pokemon");
+    collection.insertOne(req.body).then(result => {
+        console.log(result);
+    });
+    res.send('Data has been sent to collection');
+});
 
 app.get('/', (req, res) => {
     res.send('Welcome on the page');
@@ -45,15 +67,6 @@ app.listen(port, () => {
         db = client.db(DB_NAME);
         console.log(`Connected to database: ${DB_NAME}`);
     });
-});
-
-// MongoDB
-
-const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://admin:admin@cluster0.9ryim.mongodb.net/pokemonList?retryWrites=true&w=majority";
-const DB_NAME = "pokemonList";
-const client = new MongoClient(uri, {
-    useNewUrlParser: true
 });
 
 async function addPokemon(pokemon) {
