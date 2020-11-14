@@ -76,7 +76,11 @@ window.onload = () => {
         for (let id in pokemonFormList) {
             if (pokemonFormList[id].pokemon_id === pokemonId) {
                 let pokemonForm = pokemonFormList[id].form;
-                htmlString += `<option value=${id}>${pokemonForm}</option>`;
+                if (pokemonForm === "Normal") {
+                    htmlString += `<option value=${id} selected>${pokemonForm}</option>`
+                } else {
+                    htmlString += `<option value=${id}>${pokemonForm}</option>`;
+                }
             } else if (pokemonFormList[id].pokemon_id > pokemonId) {
                 break
             }
