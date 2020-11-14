@@ -4,6 +4,11 @@ window.onload = () => {
         const data = await resp.json();
         document.getElementById('content').innerText = JSON.stringify(data);
         console.log(data);
+        let htmlstring = '';
+        data.forEach(pokemon => {
+            htmlstring += `<p>${pokemon.name}, ${pokemon.form}, ${pokemon.type}</p>`
+        });
+        document.getElementById('allPokemon').insertAdjacentHTML('afterend', htmlstring);
     }
     runTest();
 };
