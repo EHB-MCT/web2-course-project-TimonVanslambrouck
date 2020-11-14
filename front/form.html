@@ -7,13 +7,18 @@
     <title>Add pokemon</title>
     <script src="./formScript.js"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
 </head>
 
 <body>
     <h1>Add Pokémon</h1>
     <form id="addPokemonForm">
-        <select id="PokemonName">
-            <option>Select</option>
+        <select class="selectForm" id="pokemonName">
+            <option value="begin">Name</option>
+        </select>
+        <select class="selectForm" id="pokemonFormSelect">
         </select>
         <button type="submit" id="submitButton">Add pokemon</button>
     </form>

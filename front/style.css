@@ -1,0 +1,15 @@
+/* ALL */
+* {
+    font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+    margin-left: 20px;
+}
+
+/* FORM */
+
+#pokemonFormSelect {
+    display: none;
+}
+
+.selectForm {
+    margin-right: 10px;
+}

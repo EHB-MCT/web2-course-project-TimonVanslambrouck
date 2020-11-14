@@ -1,6 +1,17 @@
 window.onload = () => {
     let pokemonNameList = [];
-    async function getOptions() {
+    let pokemonFormList = [];
+
+    setup();
+
+    function setup() {
+        document.getElementById('submitButton').addEventListener('click', addPokemon);
+        document.getElementById('pokemonName').addEventListener('change', showType);
+        getPokemonNames();
+        getPokemonForms();
+    }
+
+    async function getPokemonNames() {
         const resp = await fetch("https://pokemon-go1.p.rapidapi.com/pokemon_names.json", {
             "method": "GET",
             "headers": {
@@ -10,23 +21,41 @@ window.onload = () => {
         });
         const data = await resp.json();
         pokemonNameList = [];
-        console.log(data);
+        let htmlString = '';
         for (let id in data) {
             let pokemonName = data[id].name;
-            let htmlString = `<option value=${pokemonName}>${pokemonName}</option>`;
-            document.getElementById('PokemonName').insertAdjacentHTML('beforeend', htmlString);
+            htmlString += `<option value= ${data[id].id}>${pokemonName}</option>`;
             pokemonNameList.push(pokemonName);
         }
+        document.getElementById('pokemonName').insertAdjacentHTML('beforeend', htmlString);
+    }
+
+    async function getPokemonForms() {
+        const resp = await fetch("https://pokemon-go1.p.rapidapi.com/pokemon_types.json", {
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-key": "9d0a09fc10mshe5a93973c23a87ap12761ajsndf646d78f6f5",
+                "x-rapidapi-host": "pokemon-go1.p.rapidapi.com"
+            }
+        });
+        const data = await resp.json();
+        pokemonFormList = data;
     }
 
     function addPokemon(event) {
         event.preventDefault();
-        let selectedName = document.getElementById('PokemonName').value;
+        if (document.getElementById('pokemonName').value == 'begin') {
+            return window.alert('please choose a Pokémon!');
+        }
+        let selectedName = pokemonNameList[Number(document.getElementById('pokemonName').value) - 1];
+        let selectedForm = pokemonFormList[document.getElementById('pokemonFormSelect').value].form;
+        let selectedType = pokemonFormList[document.getElementById('pokemonFormSelect').value].type;
         let pokemon = {
             name: selectedName,
-            type: "fire"
+            form: selectedForm,
+            type: selectedType
         };
-        //source:  https://www.freecodecamp.org/news/javascript-fetch-api-tutorial-with-js-fetch-post-and-header-examples/
+        // source: https: //www.freecodecamp.org/news/javascript-fetch-api-tutorial-with-js-fetch-post-and-header-examples/
         fetch('http://localhost:3000/api/pokemon', {
             method: "POST",
             body: JSON.stringify(pokemon),
@@ -34,9 +63,34 @@ window.onload = () => {
                 "Content-type": "application/json; charset=UTF-8"
             }
         });
+        window.alert('Pokémon has been added!');
     }
 
-    document.getElementById('submitButton').addEventListener('click', addPokemon);
-    getOptions();
+    function showType(event) {
+        event.preventDefault();
 
+        let pokemonFormSelect = document.getElementById('pokemonFormSelect');
+        let pokemonId = Number(document.getElementById('pokemonName').value);
+        let htmlString = '';
+
+        for (let id in pokemonFormList) {
+            if (pokemonFormList[id].pokemon_id === pokemonId) {
+                let pokemonForm = pokemonFormList[id].form;
+                htmlString += `<option value=${id}>${pokemonForm}</option>`;
+            } else if (pokemonFormList[id].pokemon_id > pokemonId) {
+                break
+            }
+        }
+        clearOptions(pokemonFormSelect);
+        pokemonFormSelect.insertAdjacentHTML('beforeend', htmlString);
+        pokemonFormSelect.style.display = 'inline-block';
+    }
+
+    // source: https://stackoverflow.com/questions/3364493/how-do-i-clear-all-options-in-a-dropdown-box
+    function clearOptions(selectElement) {
+        let length = selectElement.options.length - 1;
+        for (let i = length; i >= 0; i--) {
+            selectElement.remove(i)
+        }
+    }
 };
