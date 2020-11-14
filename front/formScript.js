@@ -1,5 +1,7 @@
 window.onload = () => {
     let pokemonNameList = [];
+    let pokemonNameListSorted = [];
+    let pokemonNameReverseListSorted = [];
     let pokemonFormList = [];
 
     setup();
@@ -7,6 +9,7 @@ window.onload = () => {
     function setup() {
         document.getElementById('submitButton').addEventListener('click', addPokemon);
         document.getElementById('pokemonName').addEventListener('change', showType);
+        document.getElementById('selectOrder').addEventListener('change', changeOrder);
         getPokemonNames();
         getPokemonForms();
     }
@@ -27,6 +30,13 @@ window.onload = () => {
             htmlString += `<option value= ${data[id].id}>${pokemonName}</option>`;
             pokemonNameList.push(pokemonName);
         }
+        pokemonNameListSorted = pokemonNameList;
+        pokemonNameReverseListSorted = pokemonNameList;
+        sortList(pokemonNameListSorted, -1, 1);
+        console.log(pokemonNameListSorted);
+        reverseSortList(pokemonNameReverseListSorted, 1, -1);
+        console.log(pokemonNameListSorted);
+
         document.getElementById('pokemonName').insertAdjacentHTML('beforeend', htmlString);
     }
 
@@ -90,11 +100,50 @@ window.onload = () => {
         pokemonFormSelect.style.display = 'inline-block';
     }
 
+    function changeOrder(event) {
+        event.preventDefault();
+        let selectedOrder = document.getElementById('selectOrder').value;
+        if (selectedOrder === 'alphabetical') {
+
+        }
+    }
+
     // source: https://stackoverflow.com/questions/3364493/how-do-i-clear-all-options-in-a-dropdown-box
     function clearOptions(selectElement) {
         let length = selectElement.options.length - 1;
         for (let i = length; i >= 0; i--) {
             selectElement.remove(i)
         }
+    }
+
+    // source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+    function sortList(array) {
+        array.sort(function (a, b) {
+            var nameA = a.toUpperCase(); // ignore upper and lowercase
+            var nameB = b.toUpperCase(); // ignore upper and lowercase
+            if (nameA < nameB) {
+                return -1;
+            }
+            if (nameA > nameB) {
+                return 1;
+            }
+            // names must be equal
+            return 0;
+        });
+    }
+
+    function reverseSortList(array) {
+        array.sort(function (a, b) {
+            var nameA = a.toUpperCase(); // ignore upper and lowercase
+            var nameB = b.toUpperCase(); // ignore upper and lowercase
+            if (nameA < nameB) {
+                return 1;
+            }
+            if (nameA > nameB) {
+                return -1;
+            }
+            // names must be equal
+            return 0;
+        });
     }
 };

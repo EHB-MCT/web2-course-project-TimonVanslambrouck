@@ -1,7 +1,7 @@
 /* ALL */
 * {
     font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
-    margin-left: 20px;
+    margin-left: 1%;
 }
 
 /* FORM */
@@ -11,5 +11,6 @@
 }
 
 .selectForm {
-    margin-right: 10px;
+    margin-right: 2%;
+    width: 8%;
 }
