@@ -38,7 +38,16 @@ app.use(bodyParser.json());
 
 pokeRouter.route('/pokemon').get((req, res) => {
     collection = db.collection("pokemon");
-    collection.find({}).toArray((err, result) => {
+    const query = {};
+    if (req.query.form) {
+        query.form = req.query.form;
+    } else if (req.query.name) {
+        query.name = req.query.name;
+    } else if (req.query.type) {
+        query.type = req.query.type;
+    }
+
+    collection.find(query).toArray((err, result) => {
         if (err) {
             return res.status(500).send(err);
         }
@@ -57,6 +66,10 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api', pokeRouter);
+
+app.get('/pokemon/:id', (req, res) => {
+
+});
 
 app.listen(port, () => {
     console.log(`Running on port ${port}`);
