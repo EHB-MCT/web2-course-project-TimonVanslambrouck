@@ -9,13 +9,13 @@ let db = null;
 let collection = null;
 
 // MongoDB
-
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://admin:admin@cluster0.9ryim.mongodb.net/pokemonList?retryWrites=true&w=majority";
 const DB_NAME = "pokemonList";
 const client = new MongoClient(uri, {
     useNewUrlParser: true
 });
+const ObjectId = require('mongodb').ObjectID;
 
 // BODYPARSER
 
@@ -59,6 +59,23 @@ pokeRouter.route('/pokemon').get((req, res) => {
         console.log(result);
     });
     res.send('Data has been sent to collection');
+});
+
+pokeRouter.route('/pokemon/:pokemonId').get((req, res) => {
+    collection = db.collection("pokemon");
+    // Source: https://stackoverflow.com/questions/13850819/can-i-determine-if-a-string-is-a-mongodb-objectid
+    if (req.params.pokemonId.match(/^[0-9a-fA-F]{24}$/) === null) {
+        return res.send('This Pokémon ID does not exist!');
+    }
+    const query = {
+        _id: ObjectId(req.params.pokemonId)
+    }
+    collection.find(query).toArray((err, result) => {
+        if (err) {
+            return res.status(500).send(err);
+        }
+        return res.json(result);
+    })
 });
 
 app.get('/', (req, res) => {
