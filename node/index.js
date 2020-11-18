@@ -13,7 +13,8 @@ const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://admin:admin@cluster0.9ryim.mongodb.net/pokemonList?retryWrites=true&w=majority";
 const DB_NAME = "pokemonList";
 const client = new MongoClient(uri, {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 });
 const ObjectId = require('mongodb').ObjectID;
 
