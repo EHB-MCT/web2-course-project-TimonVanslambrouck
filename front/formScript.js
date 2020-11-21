@@ -152,7 +152,7 @@ window.onload = () => {
     }
 
     async function getEvoltuions(id, form) {
-        let evolutions = null;
+        let evolutions = 0;
         const resp = await fetch("https://pokemon-go1.p.rapidapi.com/pokemon_evolutions.json", {
             "method": "GET",
             "headers": {

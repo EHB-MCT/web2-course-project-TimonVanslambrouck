@@ -6,7 +6,11 @@ window.onload = () => {
         console.log(data);
         let htmlstring = '';
         data.forEach(pokemon => {
-            htmlstring += `<p>${pokemon.name}, ${pokemon.form}, ${pokemon.type}, ${pokemon.cp},<a target="_blank" href=${pokemon.picture}>picture</a></p>`
+            if (`${pokemon.evolution}` == 0) {
+                htmlstring += `<p>${pokemon.name}, ${pokemon.form}, ${pokemon.type}, ${pokemon.cp},<a target="_blank" href=${pokemon.picture}>picture</a>, /</p>`
+            } else {
+                htmlstring += `<p>${pokemon.name}, ${pokemon.form}, ${pokemon.type}, ${pokemon.cp},<a target="_blank" href=${pokemon.picture}>picture</a>, ${pokemon.evolution[0].pokemon_name}</p>`
+            }
         });
         document.getElementById('allPokemon').insertAdjacentHTML('afterend', htmlstring);
     }
