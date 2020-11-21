@@ -65,6 +65,7 @@ window.onload = () => {
         }
 
         let selectedPokemonEvolution = await getEvoltuions(selectedId, selectedForm);
+        let selectedPokemonBuddyDistance = await getBuddyDistance(selectedId);
 
         let pokemon = {
             id: selectedId,
@@ -74,6 +75,7 @@ window.onload = () => {
             shiny: shiny,
             cp: cpSelectedPokemon,
             evolution: selectedPokemonEvolution,
+            distance: selectedPokemonBuddyDistance,
             picture: picturePokemon
         };
         // source: https: //www.freecodecamp.org/news/javascript-fetch-api-tutorial-with-js-fetch-post-and-header-examples/
@@ -168,6 +170,30 @@ window.onload = () => {
             }
         }
         return evolutions
+    }
+
+    async function getBuddyDistance(id) {
+        let distance = 0;
+        const resp = await fetch("https://pokemon-go1.p.rapidapi.com/pokemon_buddy_distances.json", {
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-key": "9d0a09fc10mshe5a93973c23a87ap12761ajsndf646d78f6f5",
+                "x-rapidapi-host": "pokemon-go1.p.rapidapi.com"
+            }
+        });
+        const data = await resp.json();
+        for (pokemonId in data) {
+            data[pokemonId].forEach(pokemon => {
+                if (distance !== 0) {
+                    return distance;
+                }
+                if (pokemon.pokemon_id == id) {
+                    distance = pokemon.distance;
+                    return distance;
+                }
+            });
+        }
+        return distance;
     }
 
     // source: https://stackoverflow.com/questions/3364493/how-do-i-clear-all-options-in-a-dropdown-box
