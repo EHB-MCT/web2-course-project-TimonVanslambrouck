@@ -6,7 +6,7 @@ window.onload = () => {
 
     function setup() {
         document.getElementById('submitButton').addEventListener('click', addPokemon);
-        document.getElementById('pokemonName').addEventListener('change', showType);
+        document.getElementById('pokemonName').addEventListener('change', showTypeAndShiny);
         getPokemonNames();
         getPokemonForms();
     }
@@ -43,7 +43,7 @@ window.onload = () => {
         pokemonFormList = data;
     }
 
-    function addPokemon(event) {
+    async function addPokemon(event) {
         event.preventDefault();
         if (document.getElementById('pokemonName').value == 'begin') {
             return window.alert('please choose a Pokémon!');
@@ -51,10 +51,19 @@ window.onload = () => {
         let selectedName = pokemonNameList[Number(document.getElementById('pokemonName').value) - 1];
         let selectedForm = pokemonFormList[document.getElementById('pokemonFormSelect').value].form;
         let selectedType = pokemonFormList[document.getElementById('pokemonFormSelect').value].type;
+        let selectedPokemon = await getPokemon(selectedName);
+        let picturePokemon = selectedPokemon.sprites.front_default;
+        let shiny = false;
+        if (document.getElementById('pokemonShinySelect').value == 'shiny') {
+            shiny = true;
+            picturePokemon = selectedPokemon.sprites.front_shiny;
+        }
         let pokemon = {
             name: selectedName,
             form: selectedForm,
-            type: selectedType
+            type: selectedType,
+            shiny: shiny,
+            picture: picturePokemon
         };
         // source: https: //www.freecodecamp.org/news/javascript-fetch-api-tutorial-with-js-fetch-post-and-header-examples/
         fetch('http://localhost:3000/api/pokemon', {
@@ -67,9 +76,17 @@ window.onload = () => {
         window.alert('Pokémon has been added!');
     }
 
-    function showType(event) {
+    async function getPokemon(name) {
+        name = name.toLowerCase();
+        const resp = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+        const data = resp.json();
+        return data;
+    }
+
+    function showTypeAndShiny(event) {
         event.preventDefault();
 
+        let pokemonShinySelect = document.getElementById('pokemonShinySelect');
         let pokemonFormSelect = document.getElementById('pokemonFormSelect');
         let pokemonId = Number(document.getElementById('pokemonName').value);
         let htmlString = '';
@@ -89,14 +106,7 @@ window.onload = () => {
         clearOptions(pokemonFormSelect);
         pokemonFormSelect.insertAdjacentHTML('beforeend', htmlString);
         pokemonFormSelect.style.display = 'inline-block';
-    }
-
-    function changeOrder(event) {
-        event.preventDefault();
-        let selectedOrder = document.getElementById('selectOrder').value;
-        if (selectedOrder === 'alphabetical') {
-
-        }
+        pokemonShinySelect.style.display = 'inline-block';
     }
 
     // source: https://stackoverflow.com/questions/3364493/how-do-i-clear-all-options-in-a-dropdown-box

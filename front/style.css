@@ -10,7 +10,11 @@
     display: none;
 }
 
+#pokemonShinySelect {
+    display: none;
+}
+
 .selectForm {
     margin-right: 2%;
-    width: 8%;
+    width: 150px;
 }
