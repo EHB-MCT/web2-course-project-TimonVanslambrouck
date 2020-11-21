@@ -6,6 +6,10 @@
 
 /* FORM */
 
+#cpPokemon {
+    display: none;
+}
+
 #pokemonFormSelect {
     display: none;
 }
