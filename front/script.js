@@ -6,7 +6,7 @@ window.onload = () => {
         console.log(data);
         let htmlstring = '';
         data.forEach(pokemon => {
-            htmlstring += `<p>${pokemon.name}, ${pokemon.form}, ${pokemon.type}, ${pokemon.cp}, <a  target="_blank" href=${pokemon.picture}>link picture</a> </p>`
+            htmlstring += `<p>${pokemon.name}, ${pokemon.form}, ${pokemon.type}, ${pokemon.cp},<a target="_blank" href=${pokemon.picture}>picture</a></p>`
         });
         document.getElementById('allPokemon').insertAdjacentHTML('afterend', htmlstring);
     }
