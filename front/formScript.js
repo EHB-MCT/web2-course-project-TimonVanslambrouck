@@ -48,6 +48,7 @@ window.onload = () => {
             return window.alert('please choose a Pokémon!');
         }
         let cpSelectedPokemon = document.getElementById('cpPokemon').value;
+        let selectedId = Number(document.getElementById('pokemonName').value);
         let selectedName = pokemonNameList[Number(document.getElementById('pokemonName').value) - 1];
         let selectedForm = pokemonFormList[document.getElementById('pokemonFormSelect').value].form;
         let selectedType = pokemonFormList[document.getElementById('pokemonFormSelect').value].type;
@@ -58,17 +59,21 @@ window.onload = () => {
             shiny = true;
             picturePokemon = selectedPokemon.sprites.front_shiny;
         }
-        let cpIsInvalid = await checkCP(cpSelectedPokemon, selectedForm, Number(document.getElementById('pokemonName').value));
+        let cpIsInvalid = await checkCP(cpSelectedPokemon, selectedForm, selectedId);
         if (cpIsInvalid) {
             return window.alert('please enter valid CP!');
         }
 
+        let selectedPokemonEvolution = await getEvoltuions(selectedId, selectedForm);
+
         let pokemon = {
+            id: selectedId,
             name: selectedName,
             form: selectedForm,
             type: selectedType,
             shiny: shiny,
             cp: cpSelectedPokemon,
+            evolution: selectedPokemonEvolution,
             picture: picturePokemon
         };
         // source: https: //www.freecodecamp.org/news/javascript-fetch-api-tutorial-with-js-fetch-post-and-header-examples/
@@ -144,6 +149,25 @@ window.onload = () => {
         }
         return false;
 
+    }
+
+    async function getEvoltuions(id, form) {
+        let evolutions = null;
+        const resp = await fetch("https://pokemon-go1.p.rapidapi.com/pokemon_evolutions.json", {
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-key": "9d0a09fc10mshe5a93973c23a87ap12761ajsndf646d78f6f5",
+                "x-rapidapi-host": "pokemon-go1.p.rapidapi.com"
+            }
+        });
+        const data = await resp.json();
+        for (let pokemonId in data) {
+            if (data[pokemonId].pokemon_id === id && data[pokemonId].form === form) {
+                evolutions = data[pokemonId].evolutions;
+                return evolutions
+            }
+        }
+        return evolutions
     }
 
     // source: https://stackoverflow.com/questions/3364493/how-do-i-clear-all-options-in-a-dropdown-box
