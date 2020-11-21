@@ -127,7 +127,7 @@ window.onload = () => {
     async function checkCP(cp, form, id) {
         let maxCP = 5000;
         cp = cp * 1;
-        if (cp <= 0 || cp > 6000) {
+        if (cp <= 0 || cp > 6000 || cp === '') {
             console.log(cp);
             return true
         }
