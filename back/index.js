@@ -8,13 +8,12 @@ const pokeRouter = express.Router();
 const port = process.env.PORT || 4000;
 let db = null;
 let collection = null;
-let configData;
-getConfig();
+
 
 // MongoDB
 
 const MongoClient = require('mongodb').MongoClient;
-const uri = `mongodb+srv://${configData.admin}:${configData.password}@cluster0.9ryim.mongodb.net/pokemonList?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://admin:admin@cluster0.9ryim.mongodb.net/pokemonList?retryWrites=true&w=majority`;
 const DB_NAME = "pokemonList";
 const client = new MongoClient(uri, {
     useNewUrlParser: true,
@@ -103,9 +102,3 @@ app.listen(port, () => {
         console.log(`Connected to database: ${DB_NAME}`);
     });
 })
-
-async function getConfig() {
-    const data = await fetch('../config.json');
-    const resp = await data.json();
-    resp = configData;
-}
