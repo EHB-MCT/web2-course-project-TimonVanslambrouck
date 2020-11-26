@@ -79,7 +79,7 @@ window.onload = () => {
             picture: picturePokemon
         };
         // source: https: //www.freecodecamp.org/news/javascript-fetch-api-tutorial-with-js-fetch-post-and-header-examples/
-        fetch('http://localhost:3000/api/pokemon', {
+        fetch('ttps://web2-course-project-api-tv.herokuapp.com/api/pokemon', {
             method: "POST",
             body: JSON.stringify(pokemon),
             headers: {
