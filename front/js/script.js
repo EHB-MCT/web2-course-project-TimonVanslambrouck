@@ -1,10 +1,7 @@
 window.onload = () => {
     async function runTest() {
-        const urlResp = await fetch('../config.json');
-        const urlData = await urlResp.json();
-        console.log(urlData.url);
         const resp = await fetch(urlData.url);
-        const data = await resp.json();
+        const data = await resp.json("https://web2-course-project-api-tv.herokuapp.com/api/pokemon");
         document.getElementById('content').innerText = JSON.stringify(data);
         console.log(data);
         let htmlstring = '';
