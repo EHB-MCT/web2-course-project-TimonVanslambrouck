@@ -1,14 +1,16 @@
+const path = require('path');
 const bodyParser = require('body-parser');
 const express = require("express");
 const cors = require('cors');
 const app = express();
 app.use(cors());
 const pokeRouter = express.Router();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 let db = null;
 let collection = null;
 
 // MongoDB
+
 const MongoClient = require('mongodb').MongoClient;
 const uri = "mongodb+srv://admin:admin@cluster0.9ryim.mongodb.net/pokemonList?retryWrites=true&w=majority";
 const DB_NAME = "pokemonList";
@@ -80,7 +82,7 @@ pokeRouter.route('/pokemon/:pokemonId').get((req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.send('Welcome on the page');
+    res.sendFile(path.join(__dirname + '/public/info.html'));
 });
 
 app.use('/api', pokeRouter);
