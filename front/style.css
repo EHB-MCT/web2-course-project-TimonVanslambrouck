@@ -19,6 +19,13 @@ a:link {
     text-decoration: none !important;
 }
 
+/* https://www.geeksforgeeks.org/how-to-disable-scrolling-temporarily-using-javascript/ */
+.stop-scrolling {
+    height: 100%;
+    overflow: hidden;
+}
+
+
 /* LOGO */
 
 .logo {

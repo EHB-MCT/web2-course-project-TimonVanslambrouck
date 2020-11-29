@@ -15,6 +15,7 @@ window.onload = () => {
     function addInputs(e) {
         e.preventDefault();
         console.log('add');
+        document.body.classList.remove("stop-scrolling");
         document.getElementById('overlay').style.display = 'none';
     }
 
@@ -60,6 +61,8 @@ window.onload = () => {
     }
 
     async function getOverlay(button) {
+        window.scrollTo(0, 0);
+        document.body.classList.add("stop-scrolling");
         let selectedPokemonID = document.getElementById(button).value;
         let htmlStringOptions = '';
         for (let id in pokemonFormList) {
