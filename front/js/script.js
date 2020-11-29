@@ -18,12 +18,16 @@ window.onload = () => {
         let sortBy = document.getElementById('sorts').value;
         if (sortBy === 'pokedex') {
             document.getElementById('pokemonDisplay').innerHTML = htmlPokedexSorted;
+            addEventListenersIndex();
         } else if (sortBy === 'reversePokedex') {
             document.getElementById('pokemonDisplay').innerHTML = htmlReversePokedexSorted;
+            addEventListenersIndex();
         } else if (sortBy === 'alphabetical') {
             document.getElementById('pokemonDisplay').innerHTML = htmlAlphabeticalSorted;
+            addEventListenersIndex();
         } else if (sortBy === 'reverseAlphabetical') {
             document.getElementById('pokemonDisplay').innerHTML = htmlReverseAlphabeticalSorted;
+            addEventListenersIndex();
         }
     }
 
@@ -80,7 +84,8 @@ window.onload = () => {
             });
         }
         // SOURCE: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
-        sortedPokemonNameList = pokemonNameList.sort(function (a, b) {
+        sortedPokemonNameList = pokemonNameList;
+        sortedPokemonNameList = sortedPokemonNameList.sort(function (a, b) {
             var nameA = a.toUpperCase(); // ignore upper and lowercase
             var nameB = b.toUpperCase(); // ignore upper and lowercase
             if (nameA < nameB) {
@@ -95,10 +100,11 @@ window.onload = () => {
         getAlphabeticalHtml();
     }
 
-    async function getOverlay(button) {
+    function getOverlay(button) {
         window.scrollTo(0, 0);
         document.body.classList.add("stop-scrolling");
         let selectedPokemonID = document.getElementById(button).value;
+        console.log(selectedPokemonID);
         let htmlStringOptions = '';
         for (let id in pokemonFormList) {
             if (pokemonFormList[id].pokemon_id == selectedPokemonID) {
@@ -112,9 +118,8 @@ window.onload = () => {
                 break
             }
         }
-
         let htmlString = `<div class="inputScreen">
-        <h1>${pokemonNameList[selectedPokemonID-1]}</h1>
+        <h1>${nameData[selectedPokemonID].name}</h1>
         <div class="inputField">
             <h2>Form:</h2>
             <select class="form-control" id="form">
@@ -174,6 +179,15 @@ window.onload = () => {
                 }
             }
         });
+    }
+
+    function addEventListenersIndex() {
+        console.log('adding')
+        for (let index = 1; index <= pokemonNameList.length; index++) {
+            document.getElementById(`selectPokemonButton${index}`).addEventListener('click', function () {
+                getOverlay(`selectPokemonButton${index}`);
+            });
+        }
     }
 
 };
