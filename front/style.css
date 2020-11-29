@@ -91,7 +91,7 @@ a:link {
 
 .inputs select {
     display: inline-block;
-    width: 7.5%;
+    width: 200px;
     margin-right: 5%;
     height: 40px;
     font-size: 20px;
@@ -245,4 +245,40 @@ a:link {
 .selectForm {
     margin-right: 2%;
     width: 150px;
+}
+
+@media only screen and (max-width: 1700px) {
+    .pokemonDisplay {
+        grid-template-columns: repeat(11, 1fr);
+    }
+}
+
+@media only screen and (max-width: 1560px) {
+    .pokemonDisplay {
+        grid-template-columns: repeat(10, 1fr);
+    }
+}
+
+@media only screen and (max-width: 1410px) {
+    .pokemonDisplay {
+        grid-template-columns: repeat(9, 1fr);
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    .pokemonDisplay {
+        grid-template-columns: repeat(8, 1fr);
+    }
+}
+
+@media only screen and (max-width: 1150px) {
+    .pokemonDisplay {
+        grid-template-columns: repeat(7, 1fr);
+    }
+}
+
+@media only screen and (max-width: 1005px) {
+    .pokemonDisplay {
+        grid-template-columns: repeat(6, 1fr);
+    }
 }
