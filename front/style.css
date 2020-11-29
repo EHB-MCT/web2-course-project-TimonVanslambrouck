@@ -1,7 +1,221 @@
 /* ALL */
 * {
-    font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
-    margin-left: 1%;
+    font-family: 'Rubik', sans-serif;
+}
+
+/* https://stackoverflow.com/questions/22672368/how-to-make-a-transparent-html-button */
+button {
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+}
+
+a:link {
+    text-decoration: none !important;
+}
+
+/* LOGO */
+
+.logo {
+    text-transform: uppercase;
+    color: white;
+    text-align: center;
+    margin: 0;
+    background-color: #4DAC8C;
+}
+
+.logoTitel {
+    padding: 2.35%;
+    margin: 0;
+}
+
+/* NAV */
+
+.navList {
+    padding: 0;
+    margin-top: 1%;
+    margin-bottom: 2%;
+    list-style: none;
+    text-align: center;
+}
+
+.navList li {
+    display: inline-block;
+    font-size: 28px;
+    font-weight: bold;
+    color: #5296A1;
+}
+
+.navList :first-child {
+    margin-right: 2%;
+}
+
+.navList :last-child {
+    margin-left: 2%;
+}
+
+#currentPage {
+    color: #4DAC8C;
+    font-weight: normal;
+}
+
+/* INDEX */
+
+.mainWithGutter {
+    margin: 0 3%;
+}
+
+.inputs {
+    margin-bottom: 2%;
+}
+
+.inputs input {
+    display: inline-block;
+    width: 14.5%;
+    height: 40px;
+    font-size: 20px;
+    margin-right: 5%;
+}
+
+.inputs select {
+    display: inline-block;
+    width: 7.5%;
+    margin-right: 5%;
+    height: 40px;
+    font-size: 20px;
+    color: gray;
+    /*source: https://stackoverflow.com/questions/42363405/how-to-edit-the-select-form-arrow-bootstrap-4/42363552 */
+    background-image:
+        linear-gradient(55deg, transparent 50%, #4DAC8C 60%),
+        linear-gradient(125deg, #4DAC8C 40%, transparent 50%) !important;
+    background-position:
+        calc(100% - 15px) 14px,
+        calc(100% - 5px) 14px,
+        100% 0;
+    background-size:
+        10px 10px,
+        10px 10px;
+    background-repeat: no-repeat;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.pokemonDisplay {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto;
+    text-align: center;
+}
+
+.pokemonPicutreBox {
+    position: relative;
+}
+
+.pokemonPicture {
+    width: 100%;
+}
+
+.pokemonName {
+    margin: 0;
+    padding: 10px;
+    font-size: 20px;
+    color: black;
+}
+
+.addButton {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(165, 157, 157, 0.5);
+    width: 100%;
+    height: 100%;
+}
+
+.inputScreen {
+    border: solid black 1px;
+    position: absolute;
+    top: 20%;
+    left: 36%;
+    background-color: white;
+    width: 28%;
+    height: 70%;
+}
+
+.inputField {
+    margin-top: 10%;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: repeat(5, 70px);
+
+}
+
+.inputScreen h1 {
+    margin-top: 8%;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.inputScreen h2 {
+    font-size: 24px;
+    font-weight: normal;
+    padding: 0;
+    margin: 0;
+    margin-left: 20%;
+    margin-top: 2%;
+}
+
+.inputScreen input,
+.inputScreen select {
+    width: 80%;
+    -moz-appearance: textfield;
+}
+
+.inputScreen select {
+    /*source: https://stackoverflow.com/questions/42363405/how-to-edit-the-select-form-arrow-bootstrap-4/42363552 */
+    background-image:
+        linear-gradient(55deg, transparent 50%, #4DAC8C 60%),
+        linear-gradient(125deg, #4DAC8C 40%, transparent 50%) !important;
+    background-position:
+        calc(100% - 15px) 14px,
+        calc(100% - 5px) 14px,
+        100% 0;
+    background-size:
+        10px 10px,
+        10px 10px;
+    background-repeat: no-repeat;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+#shinyCheckbox {
+    margin-top: 4%;
+}
+
+.inputScreen a {
+    text-decoration: none;
+    color: white;
+}
+
+.saveButton {
+    margin-top: 12%;
+}
+
+#saveButton {
+    margin-left: calc(50% - 75px/2);
+    background-color: #4DAC8C;
+    padding: 20px;
+    border-radius: 12px;
 }
 
 /* FORM */

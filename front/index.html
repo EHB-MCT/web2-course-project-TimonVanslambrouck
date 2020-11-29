@@ -5,23 +5,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel="icon" type="image/jpg" href="./favicon.jpg" />
+    <link rel="icon" type="image/jpg" href="./pics/favicon.jpg" />
     <script src="./js/script.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
         integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <h1>DATA</h1>
-    <div id="content">
+    <header>
+        <div class="logo">
+            <h1 class="logoTitel">Pokéteam-manager</h1>
+        </div>
+    </header>
+    <nav>
+        <ul class="navList">
+            <a href="#">
+                <li id="currentPage">All Pokémon</li>
+            </a>
+            <a href="#">
+                <li>My Team</li>
+            </a>
+            <a href="#">
+                <li>Sign out</li>
+            </a>
+        </ul>
+    </nav>
+    <main class="mainWithGutter">
+        <div class="inputs">
+            <input class="form-control" placeholder="NAME" type="text">
+            <select class="form-control" id="types">
+                <option selected value="type">TYPE</option>
+            </select>
+            <select class="form-control" id="sorts">
+                <option value="sort">SORT BY</option>
+                <option value="alphabetical">ALPHABETICAL</option>
+                <option value="pokedex">POKÉDEX</option>
+            </select>
+        </div>
+        <div class="pokemonDisplay">
+            <div class="pokemon">
+                <button type="submit" id="selectPokemonButton" value="charizard">
+                    <div class="pokemonPicutreBox">
+                        <img class="pokemonPicture"
+                            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/6.png"
+                            alt="">
+                        <img class="addButton" src="./svg/plus.svg" alt="">
+                    </div>
+                    <h2 class="pokemonName">Charizard</h2>
+                </button>
+            </div>
+
+        </div>
+    </main>
+    <div id="overlay" class="overlay">
+        <div class="inputScreen">
+            <h1>Charizard</h1>
+            <div class="inputField">
+                <h2>Form:</h2>
+                <select class="form-control" id="form">
+                    <option selected value="normal">Normal</option>
+                </select>
+                <h2>CP:</h2>
+                <input class="form-control" type="number">
+                <h2>Attack:</h2>
+                <input class="form-control" type="number">
+                <h2>Defence:</h2>
+                <input class="form-control" type="number">
+                <h2>HP:</h2>
+                <input class="form-control" type="number">
+                <h2>Shiny:</h2>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="shinyCheckbox" value="shiny">
+                </div>
+            </div>
+            <div class="saveButton">
+                <button id="saveButton"><a href="#">SAVE</a></button>
+            </div>
+        </div>
     </div>
-    <h1>All Pokémon</h1>
-    <div id="allPokemon">
-        <p>Name, Form, Type(s), CP, Buddy distance, link to picture, evolution</p>
-    </div>
-    <br>
-    <a href="./form.html"><button>Go to form</button></a>
+    <a href="./form.html">Go to FORM</a>
 </body>
 
 </html>
