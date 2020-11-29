@@ -1,12 +1,31 @@
 window.onload = () => {
 
     let pokemonNameList = [];
+    let sortedPokemonNameList = [];
     let pokemonFormList = [];
+    let htmlPokedexSorted = '';
+    let htmlReversePokedexSorted = '';
+    let htmlAlphabeticalSorted = '';
+    let htmlReverseAlphabeticalSorted = '';
+    let nameData = '';
     getAllPokemon();
     getTypes();
     getPokemonForms();
+    document.getElementById('sorts').addEventListener('change', changeSort);
 
-
+    function changeSort(e) {
+        e.preventDefault();
+        let sortBy = document.getElementById('sorts').value;
+        if (sortBy === 'pokedex') {
+            document.getElementById('pokemonDisplay').innerHTML = htmlPokedexSorted;
+        } else if (sortBy === 'reversePokedex') {
+            document.getElementById('pokemonDisplay').innerHTML = htmlReversePokedexSorted;
+        } else if (sortBy === 'alphabetical') {
+            document.getElementById('pokemonDisplay').innerHTML = htmlAlphabeticalSorted;
+        } else if (sortBy === 'reverseAlphabetical') {
+            document.getElementById('pokemonDisplay').innerHTML = htmlReverseAlphabeticalSorted;
+        }
+    }
 
     function showInputs() {
         document.getElementById('overlay').style.display = 'block';
@@ -37,6 +56,7 @@ window.onload = () => {
             }
         });
         const data = await resp.json();
+        nameData = data;
         let htmlString = '';
         for (let id in data) {
             let pokemonName = data[id].name;
@@ -52,12 +72,27 @@ window.onload = () => {
                 <h2 class="pokemonName">${pokemonName}</h2>
             </button>
         </div>`;
+            htmlPokedexSorted += htmlString;
+            htmlReversePokedexSorted = htmlString + htmlReversePokedexSorted;
             document.getElementById('pokemonDisplay').insertAdjacentHTML('beforeend', htmlString);
             document.getElementById(`selectPokemonButton${data[id].id}`).addEventListener('click', function () {
                 getOverlay(`selectPokemonButton${data[id].id}`);
             });
         }
-
+        // SOURCE: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
+        sortedPokemonNameList = pokemonNameList.sort(function (a, b) {
+            var nameA = a.toUpperCase(); // ignore upper and lowercase
+            var nameB = b.toUpperCase(); // ignore upper and lowercase
+            if (nameA < nameB) {
+                return -1;
+            }
+            if (nameA > nameB) {
+                return 1;
+            }
+            // names must be equal
+            return 0;
+        });
+        getAlphabeticalHtml();
     }
 
     async function getOverlay(button) {
@@ -117,24 +152,28 @@ window.onload = () => {
         });
         const data = await resp.json();
         pokemonFormList = data;
-        console.log(pokemonFormList)
+    }
+
+    async function getAlphabeticalHtml() {
+        sortedPokemonNameList.forEach(name => {
+            for (let id in nameData) {
+                if (name === nameData[id].name) {
+                    htmlString = `<div class="pokemon">
+                    <button type="submit" id="selectPokemonButton${nameData[id].id}" value=${nameData[id].id}>
+                        <div class="pokemonPicutreBox">
+                            <img class="pokemonPicture"
+                                src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${nameData[id].id}.png"
+                                alt="picture of ${name}">
+                            <img class="addButton" src="./svg/plus.svg" alt="">
+                        </div>
+                        <h2 class="pokemonName">${name}</h2>
+                    </button>
+                </div>`;
+                    htmlAlphabeticalSorted += htmlString;
+                    htmlReverseAlphabeticalSorted = htmlString + htmlReverseAlphabeticalSorted;
+                }
+            }
+        });
     }
 
 };
-
-// async function runTest() {
-//     const resp = await fetch("https://web2-course-project-api-tv.herokuapp.com/api/pokemon");
-//     const data = await resp.json();
-//     // document.getElementById('content').innerText = JSON.stringify(data);
-//     console.log(data);
-//     let htmlstring = '';
-//     data.forEach(pokemon => {
-//         if (`${pokemon.evolution}` == 0) {
-//             htmlstring += `<p>${pokemon.name}, ${pokemon.form}, ${pokemon.type}, ${pokemon.cp}, ${pokemon.distance}km,<a target="_blank" href=${pokemon.picture}>picture</a>, /</p>`
-//         } else {
-//             htmlstring += `<p>${pokemon.name}, ${pokemon.form}, ${pokemon.type}, ${pokemon.cp}, ${pokemon.distance}km,<a target="_blank" href=${pokemon.picture}>picture</a>, ${pokemon.evolution[0].pokemon_name}</p>`
-//         }
-//     });
-//     // document.getElementById('allPokemon').insertAdjacentHTML('afterend', htmlstring);
-// }
-// runTest();
