@@ -105,19 +105,19 @@ window.onload = () => {
         document.body.classList.add("stop-scrolling");
         let selectedPokemonID = document.getElementById(button).value;
         console.log(selectedPokemonID);
-        let htmlStringOptions = '';
+        let htmlStringOptions = '`<option selected value="normal">Normal</option>`';
         for (let id in pokemonFormList) {
             if (pokemonFormList[id].pokemon_id == selectedPokemonID) {
                 let pokemonForm = pokemonFormList[id].form;
-                if (pokemonForm === "Normal") {
-                    htmlStringOptions += `<option value=${id} selected>${pokemonForm}</option>`
-                } else {
-                    htmlStringOptions += `<option value=${id}>${pokemonForm}</option>`;
+                if (pokemonForm !== "Normal") {
+                    htmlStringOptions += `<option value=${pokemonForm.toLowerCase()}>${pokemonForm}</option>`;
                 }
             } else if (pokemonFormList[id].pokemon_id > selectedPokemonID) {
                 break
             }
         }
+
+        console.log(htmlStringOptions);
         let htmlString = `<div class="inputScreen">
         <h1>${nameData[selectedPokemonID].name}</h1>
         <div class="inputField">
