@@ -40,6 +40,49 @@ window.onload = () => {
         console.log('add');
         document.body.classList.remove("stop-scrolling");
         document.getElementById('overlay').style.display = 'none';
+        /* 
+         let cpSelectedPokemon = document.getElementById('cpPokemon').value;
+        let selectedId = Number(document.getElementById('pokemonName').value);
+        let selectedName = pokemonNameList[Number(document.getElementById('pokemonName').value) - 1];
+        let selectedForm = pokemonFormList[document.getElementById('pokemonFormSelect').value].form;
+        let selectedType = pokemonFormList[document.getElementById('pokemonFormSelect').value].type;
+        let selectedPokemon = await getPokemon(selectedName);
+        let picturePokemon = selectedPokemon.sprites.front_default;
+        let shiny = false;
+        if (document.getElementById('pokemonShinySelect').value == 'shiny') {
+            shiny = true;
+            picturePokemon = selectedPokemon.sprites.front_shiny;
+        }
+        let cpIsInvalid = await checkCP(cpSelectedPokemon, selectedForm, selectedId);
+        if (cpIsInvalid) {
+            return window.alert('please enter valid CP!');
+        }
+
+        let selectedPokemonEvolution = await getEvoltuions(selectedId, selectedForm);
+        let selectedPokemonBuddyDistance = await getBuddyDistance(selectedId);
+
+        let pokemon = {
+            id: selectedId,
+            name: selectedName,
+            form: selectedForm,
+            type: selectedType,
+            shiny: shiny,
+            cp: cpSelectedPokemon,
+            evolution: selectedPokemonEvolution,
+            distance: selectedPokemonBuddyDistance,
+            picture: picturePokemon
+        };
+        // source: https: //www.freecodecamp.org/news/javascript-fetch-api-tutorial-with-js-fetch-post-and-header-examples/
+        fetch('ttps://web2-course-project-api-tv.herokuapp.com/api/pokemon', {
+            method: "POST",
+            body: JSON.stringify(pokemon),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        });
+        window.alert('Pokémon has been added!');
+    }
+        */
     }
 
     async function getTypes() {
@@ -104,7 +147,6 @@ window.onload = () => {
         window.scrollTo(0, 0);
         document.body.classList.add("stop-scrolling");
         let selectedPokemonID = document.getElementById(button).value;
-        console.log(selectedPokemonID);
         let htmlStringOptions = '`<option selected value="normal">Normal</option>`';
         for (let id in pokemonFormList) {
             if (pokemonFormList[id].pokemon_id == selectedPokemonID) {
@@ -117,7 +159,6 @@ window.onload = () => {
             }
         }
 
-        console.log(htmlStringOptions);
         let htmlString = `<div class="inputScreen">
         <h1>${nameData[selectedPokemonID].name}</h1>
         <div class="inputField">
@@ -139,7 +180,7 @@ window.onload = () => {
             </div>
         </div>
         <div class="saveButton">
-            <button id="saveButton"><a href="#">SAVE</a></button>
+            <button value=${selectedPokemonID} id="saveButton"><a href="#">SAVE</a></button>
         </div>
     </div>`
         document.getElementById('overlay').innerHTML = htmlString;
