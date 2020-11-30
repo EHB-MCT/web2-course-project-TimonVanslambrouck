@@ -31,15 +31,8 @@ window.onload = () => {
         }
     }
 
-    function showInputs() {
-        document.getElementById('overlay').style.display = 'block';
-    }
-
     function addInputs(e) {
-        e.preventDefault();
-        console.log('add');
-        document.body.classList.remove("stop-scrolling");
-        document.getElementById('overlay').style.display = 'none';
+        closeOverlay();
         /* 
          let cpSelectedPokemon = document.getElementById('cpPokemon').value;
         let selectedId = Number(document.getElementById('pokemonName').value);
@@ -160,6 +153,7 @@ window.onload = () => {
         }
 
         let htmlString = `<div class="inputScreen">
+        <button id="closeButton"><img id="closeWindow" src="./svg/cross.svg" alt="close window"></button>
         <h1>${nameData[selectedPokemonID].name}</h1>
         <div class="inputField">
             <h2>Form:</h2>
@@ -184,8 +178,9 @@ window.onload = () => {
         </div>
     </div>`
         document.getElementById('overlay').innerHTML = htmlString;
+        document.getElementById('closeButton').addEventListener('click', closeOverlay)
         document.getElementById('saveButton').addEventListener('click', addInputs);
-        showInputs();
+        document.getElementById('overlay').style.display = 'block';
     }
 
     async function getPokemonForms() {
@@ -229,6 +224,11 @@ window.onload = () => {
                 getOverlay(`selectPokemonButton${index}`);
             });
         }
+    }
+
+    function closeOverlay() {
+        document.body.classList.remove("stop-scrolling");
+        document.getElementById('overlay').style.display = 'none';
     }
 
 };
