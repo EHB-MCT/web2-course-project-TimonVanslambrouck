@@ -9,7 +9,6 @@ window.onload = () => {
     let htmlReverseAlphabeticalSorted = '';
     let nameData = '';
     getAllPokemon();
-    getTypes();
     getPokemonForms();
     document.getElementById('sorts').addEventListener('change', changeSort);
     document.getElementById('nameSearch').addEventListener('keypress', function (e) {
@@ -21,7 +20,10 @@ window.onload = () => {
     function changeSort(e) {
         e.preventDefault();
         let sortBy = document.getElementById('sorts').value;
-        if (sortBy === 'pokedex') {
+
+        if (sortBy === 'sort') {
+            return;
+        } else if (sortBy === 'pokedex') {
             document.getElementById('pokemonDisplay').innerHTML = htmlPokedexSorted;
             addEventListenersIndex();
         } else if (sortBy === 'reversePokedex') {
@@ -81,15 +83,6 @@ window.onload = () => {
         window.alert('Pokémon has been added!');
     }
         */
-    }
-
-    async function getTypes() {
-        fetch('https://pokeapi.co/api/v2/type')
-            .then(response => response.json())
-            .then(content => content.results)
-            .then(types => types.forEach(type => {
-                document.getElementById('types').insertAdjacentHTML('beforeend', `<option value="${type.name}">${type.name.toUpperCase()}</option>`)
-            }));
     }
 
     async function getAllPokemon() {
@@ -256,15 +249,9 @@ window.onload = () => {
             </button>
         </div>`;
             }
-            if (htmlString == '') {
-                htmlString = '<p>NO RESULT</p>'
-                document.getElementById('pokemonDisplay').innerHTML = htmlString;
-            } else {
-                document.getElementById('pokemonDisplay').innerHTML = htmlString;
-                addEventListenersIndex();
-            }
 
-
+            document.getElementById('pokemonDisplay').innerHTML = htmlString;
+            addEventListenersIndex();
         }
     }
 };
