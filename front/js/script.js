@@ -12,6 +12,11 @@ window.onload = () => {
     getTypes();
     getPokemonForms();
     document.getElementById('sorts').addEventListener('change', changeSort);
+    document.getElementById('nameSearch').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            searchName();
+        }
+    });
 
     function changeSort(e) {
         e.preventDefault();
@@ -218,11 +223,12 @@ window.onload = () => {
     }
 
     function addEventListenersIndex() {
-        console.log('adding')
         for (let index = 1; index <= pokemonNameList.length; index++) {
-            document.getElementById(`selectPokemonButton${index}`).addEventListener('click', function () {
-                getOverlay(`selectPokemonButton${index}`);
-            });
+            if (document.getElementById(`selectPokemonButton${index}`) !== null) {
+                document.getElementById(`selectPokemonButton${index}`).addEventListener('click', function () {
+                    getOverlay(`selectPokemonButton${index}`);
+                });
+            }
         }
     }
 
@@ -231,4 +237,34 @@ window.onload = () => {
         document.getElementById('overlay').style.display = 'none';
     }
 
+    function searchName() {
+        let search = document.getElementById('nameSearch').value.toLowerCase();
+        let htmlString = '';
+        for (let id in nameData) {
+            let pokemonName = nameData[id].name;
+            let pokemonNameLowerCase = pokemonName.toLowerCase();
+            if (pokemonNameLowerCase.includes(search)) {
+                htmlString += `<div class="pokemon">
+            <button type="submit" id="selectPokemonButton${nameData[id].id}" value=${nameData[id].id}>
+                <div class="pokemonPicutreBox">
+                    <img class="pokemonPicture"
+                        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${nameData[id].id}.png"
+                        alt="picture of ${pokemonName}">
+                    <img class="addButton" src="./svg/plus.svg" alt="">
+                </div>
+                <h2 class="pokemonName">${pokemonName}</h2>
+            </button>
+        </div>`;
+            }
+            if (htmlString == '') {
+                htmlString = '<p>NO RESULT</p>'
+                document.getElementById('pokemonDisplay').innerHTML = htmlString;
+            } else {
+                document.getElementById('pokemonDisplay').innerHTML = htmlString;
+                addEventListenersIndex();
+            }
+
+
+        }
+    }
 };
