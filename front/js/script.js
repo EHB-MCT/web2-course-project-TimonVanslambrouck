@@ -1,5 +1,6 @@
 window.onload = () => {
 
+    let selectedPokemonID;
     let pokemonNameList = [];
     let sortedPokemonNameList = [];
     let pokemonFormList = [];
@@ -38,18 +39,24 @@ window.onload = () => {
         }
     }
 
-    function addInputs(e) {
-        closeOverlay();
-        /* 
-         let cpSelectedPokemon = document.getElementById('cpPokemon').value;
-        let selectedId = Number(document.getElementById('pokemonName').value);
-        let selectedName = pokemonNameList[Number(document.getElementById('pokemonName').value) - 1];
-        let selectedForm = pokemonFormList[document.getElementById('pokemonFormSelect').value].form;
-        let selectedType = pokemonFormList[document.getElementById('pokemonFormSelect').value].type;
+    async function addInputs(e) {
+
+        let cpSelectedPokemon = document.getElementById('cpSelectedPokemon').value;
+        let selectedId = Number(selectedPokemonID);
+        let selectedName = nameData[selectedPokemonID].name;
+        let selectedForm = pokemonFormList[document.getElementById('forms').value].form;
+        let selectedType = pokemonFormList[document.getElementById('forms').value].type;
+        let selectedAttack = document.getElementById('attack').value;
+        let selectedDefense = document.getElementById('defense').value;
+        let selectedHp = document.getElementById('hp').value;
+        if (0 >= selectedAttack > 16 || 0 >= selectedDefense > 16 || 0 >= selectedHp > 16 ||
+            selectedAttack === '' || selectedDefense === '' || selectedHp === '') {
+            return window.alert('please enter valid STATS!');
+        }
         let selectedPokemon = await getPokemon(selectedName);
         let picturePokemon = selectedPokemon.sprites.front_default;
         let shiny = false;
-        if (document.getElementById('pokemonShinySelect').value == 'shiny') {
+        if (document.getElementById('shinyCheckbox').checked) {
             shiny = true;
             picturePokemon = selectedPokemon.sprites.front_shiny;
         }
@@ -70,10 +77,15 @@ window.onload = () => {
             cp: cpSelectedPokemon,
             evolution: selectedPokemonEvolution,
             distance: selectedPokemonBuddyDistance,
-            picture: picturePokemon
+            picture: picturePokemon,
+            attack: selectedAttack,
+            defense: selectedDefense,
+            hp: selectedHp
         };
+
+        console.log(pokemon)
         // source: https: //www.freecodecamp.org/news/javascript-fetch-api-tutorial-with-js-fetch-post-and-header-examples/
-        fetch('ttps://web2-course-project-api-tv.herokuapp.com/api/pokemon', {
+        fetch('https://web2-course-project-api-tv.herokuapp.com/api/pokemon', {
             method: "POST",
             body: JSON.stringify(pokemon),
             headers: {
@@ -81,8 +93,89 @@ window.onload = () => {
             }
         });
         window.alert('Pokémon has been added!');
+
+
+
+        closeOverlay();
     }
-        */
+
+    async function getPokemon(name) {
+        name = name.toLowerCase();
+        const resp = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+        const data = resp.json();
+        return data;
+    }
+
+    async function getEvoltuions(id, form) {
+        let evolutions = 0;
+        const resp = await fetch("https://pokemon-go1.p.rapidapi.com/pokemon_evolutions.json", {
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-key": "9d0a09fc10mshe5a93973c23a87ap12761ajsndf646d78f6f5",
+                "x-rapidapi-host": "pokemon-go1.p.rapidapi.com"
+            }
+        });
+        const data = await resp.json();
+        for (let pokemonId in data) {
+            if (data[pokemonId].pokemon_id === id && data[pokemonId].form === form) {
+                evolutions = data[pokemonId].evolutions;
+                return evolutions
+            }
+        }
+        return evolutions
+    }
+
+    async function checkCP(cp, form, id) {
+        let maxCP = 5000;
+        cp = cp * 1;
+        if (cp <= 0 || cp > 6000 || cp === '') {
+            console.log(cp);
+            return true
+        }
+        const resp = await fetch("https://pokemon-go1.p.rapidapi.com/pokemon_max_cp.json", {
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-key": "9d0a09fc10mshe5a93973c23a87ap12761ajsndf646d78f6f5",
+                "x-rapidapi-host": "pokemon-go1.p.rapidapi.com"
+            }
+        });
+        const data = await resp.json();
+        for (let pokemonId in data) {
+            if (data[pokemonId].pokemon_id === id && data[pokemonId].form === form) {
+                maxCP = data[pokemonId].max_cp;
+                break
+            }
+        }
+
+        if (cp > maxCP) {
+            return true;
+        }
+        return false;
+
+    }
+
+    async function getBuddyDistance(id) {
+        let distance = 0;
+        const resp = await fetch("https://pokemon-go1.p.rapidapi.com/pokemon_buddy_distances.json", {
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-key": "9d0a09fc10mshe5a93973c23a87ap12761ajsndf646d78f6f5",
+                "x-rapidapi-host": "pokemon-go1.p.rapidapi.com"
+            }
+        });
+        const data = await resp.json();
+        for (pokemonId in data) {
+            data[pokemonId].forEach(pokemon => {
+                if (distance !== 0) {
+                    return distance;
+                }
+                if (pokemon.pokemon_id == id) {
+                    distance = pokemon.distance;
+                    return distance;
+                }
+            });
+        }
+        return distance;
     }
 
     async function getAllPokemon() {
@@ -137,13 +230,15 @@ window.onload = () => {
     function getOverlay(button) {
         window.scrollTo(0, 0);
         document.body.classList.add("stop-scrolling");
-        let selectedPokemonID = document.getElementById(button).value;
-        let htmlStringOptions = '`<option selected value="normal">Normal</option>`';
+        selectedPokemonID = document.getElementById(button).value;
+        let htmlStringOptions = '';
         for (let id in pokemonFormList) {
             if (pokemonFormList[id].pokemon_id == selectedPokemonID) {
                 let pokemonForm = pokemonFormList[id].form;
-                if (pokemonForm !== "Normal") {
-                    htmlStringOptions += `<option value=${pokemonForm.toLowerCase()}>${pokemonForm}</option>`;
+                if (pokemonForm == "Normal") {
+                    htmlStringOptions += `<option selected value=${id}>Normal</option>`
+                } else {
+                    htmlStringOptions += `<option value=${id}>${pokemonForm}</option>`;
                 }
             } else if (pokemonFormList[id].pokemon_id > selectedPokemonID) {
                 break
@@ -155,17 +250,17 @@ window.onload = () => {
         <h1>${nameData[selectedPokemonID].name}</h1>
         <div class="inputField">
             <h2>Form:</h2>
-            <select class="form-control" id="form">
+            <select class="form-control" id="forms">
                 ${htmlStringOptions}
             </select>
             <h2>CP:</h2>
-            <input class="form-control" type="number">
+            <input id="cpSelectedPokemon" class="form-control" type="number">
             <h2>Attack:</h2>
-            <input class="form-control" type="number">
+            <input id="attack" class="form-control" type="number">
             <h2>Defence:</h2>
-            <input class="form-control" type="number">
+            <input id="defense" class="form-control" type="number">
             <h2>HP:</h2>
-            <input class="form-control" type="number">
+            <input id="hp" class="form-control" type="number">
             <h2>Shiny:</h2>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox" id="shinyCheckbox" value="shiny">
