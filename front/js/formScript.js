@@ -47,7 +47,7 @@ window.onload = () => {
         if (document.getElementById('pokemonName').value == 'begin') {
             return window.alert('please choose a Pokémon!');
         }
-        let cpSelectedPokemon = document.getElementById('cpPokemon').value;
+        let cpSelectedPokemon = Number(document.getElementById('cpPokemon').value);
         let selectedId = Number(document.getElementById('pokemonName').value);
         let selectedName = pokemonNameList[Number(document.getElementById('pokemonName').value) - 1];
         let selectedForm = pokemonFormList[document.getElementById('pokemonFormSelect').value].form;
@@ -79,7 +79,7 @@ window.onload = () => {
             picture: picturePokemon
         };
         // source: https: //www.freecodecamp.org/news/javascript-fetch-api-tutorial-with-js-fetch-post-and-header-examples/
-        fetch('ttps://web2-course-project-api-tv.herokuapp.com/api/pokemon', {
+        fetch('https://web2-course-project-api-tv.herokuapp.com/api/pokemon', {
             method: "POST",
             body: JSON.stringify(pokemon),
             headers: {
