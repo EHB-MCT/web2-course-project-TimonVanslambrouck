@@ -254,13 +254,13 @@ window.onload = () => {
                 ${htmlStringOptions}
             </select>
             <h2>CP:</h2>
-            <input id="cpSelectedPokemon" class="form-control" type="number">
+            <input id="cpSelectedPokemon" placeholder="/15" class="form-control" type="number">
             <h2>Attack:</h2>
-            <input id="attack" class="form-control" type="number">
+            <input id="attack" placeholder="/15" class="form-control" type="number">
             <h2>Defence:</h2>
-            <input id="defense" class="form-control" type="number">
+            <input id="defense" placeholder="/15" class="form-control" type="number">
             <h2>HP:</h2>
-            <input id="hp" class="form-control" type="number">
+            <input id="hp" placeholder="/15" class="form-control" type="number">
             <h2>Shiny:</h2>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox" id="shinyCheckbox" value="shiny">
