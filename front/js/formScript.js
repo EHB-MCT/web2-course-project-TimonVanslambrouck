@@ -47,7 +47,7 @@ window.onload = () => {
         if (document.getElementById('pokemonName').value == 'begin') {
             return window.alert('please choose a Pokémon!');
         }
-        let cpSelectedPokemon = Number(document.getElementById('cpPokemon').value);
+        let cpSelectedPokemon = document.getElementById('cpPokemon').value;
         let selectedId = Number(document.getElementById('pokemonName').value);
         let selectedName = pokemonNameList[Number(document.getElementById('pokemonName').value) - 1];
         let selectedForm = pokemonFormList[document.getElementById('pokemonFormSelect').value].form;
