@@ -55,7 +55,6 @@ pokeRouter.route('/pokemon').get((req, res) => {
         query.id = req.params.id;
     }
 
-    console.log(query);
     collection.find(query).toArray((err, result) => {
         if (err) {
             return res.status(500).send(err);
@@ -78,19 +77,6 @@ pokeRouter.route('/pokemon/:pokemonId').get((req, res) => {
     }
     const query = {
         _id: ObjectId(req.params.pokemonId)
-    }
-    collection.find(query).toArray((err, result) => {
-        if (err) {
-            return res.status(500).send(err);
-        }
-        return res.json(result);
-    })
-});
-
-pokeRouter.route('/pokemon/cp/:cpPokemon').get((req, res) => {
-    collection = db.collection("pokemon");
-    const query = {
-        id: ObjectId(req.params.cpPokemon)
     }
     collection.find(query).toArray((err, result) => {
         if (err) {
