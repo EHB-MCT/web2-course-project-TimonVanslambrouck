@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Team</title>
+    <link rel="icon" type="image/jpg" href="./pics/favicon.jpg" />
+    <script src="./js/myteam.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <h1 class="logoTitel">Pokéteam-manager</h1>
+        </div>
+    </header>
+    <nav>
+        <ul class="navList">
+            <a href="./index.html">
+                <li>All Pokémon</li>
+            </a>
+            <a href="#">
+                <li id="currentPage">My Team</li>
+            </a>
+            <a href="#">
+                <li>Sign out</li>
+            </a>
+        </ul>
+    </nav>
+
+    <main class="mainWithGutter">
+        <div class="inputs">
+            <input class="form-control" id="nameSearch" placeholder="NAME" type="search">
+            <select class="form-control" id="sorts">
+                <option selected value="sort">SORT BY</option>
+                <option value="alphabetical">ALPHABETICAL (A-Z)</option>
+                <option value="reverseAlphabetical">ALPHABETICAL (Z-A)</option>
+                <option value="pokedex">POKÉDEX (#1-...)</option>
+                <option value="reversePokedex">POKÉDEX (...-#1)</option>
+            </select>
+        </div>
+        <div id="pokemonDisplay" class="pokemonDisplay">
+
+        </div>
+    </main>
+</body>
+
+</html>
