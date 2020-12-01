@@ -9,6 +9,7 @@ window.onload = () => {
     document.getElementById('types').addEventListener('change', filterByType);
     document.getElementById('sorts').value = 'sort';
     document.getElementById('types').value = 'type';
+    document.getElementById('nameSearch').value = '';
     document.getElementById('sorts').addEventListener('change', sortBy);
     document.getElementById('nameSearch').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
@@ -129,6 +130,8 @@ window.onload = () => {
             sortByCP(reverseCpList);
         } else if (sort == 'shiny') {
             getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?shiny=1`, true)
+        } else if (sort == 'noShiny') {
+            getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?shiny=0`, true)
         }
     }
 

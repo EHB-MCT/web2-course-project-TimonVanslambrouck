@@ -26,7 +26,7 @@
                 <li>All Pokémon</li>
             </a>
             <a href="#">
-                <li id="currentPage">My Team</li>
+                <li onClick="window.location.reload();" id="currentPage">My Team</li>
             </a>
             <a href="#">
                 <li>Sign out</li>
@@ -47,6 +47,7 @@
                 <option value="cp">CP (HIGH-LOW)</option>
                 <option value="reverseCp">CP (LOW-HIGH)</option>
                 <option value="shiny">ONLY SHINY</option>
+                <option value="noShiny">NO SHINY</option>
             </select>
         </div>
         <div id="pokemonDisplay" class="pokemonDisplay">

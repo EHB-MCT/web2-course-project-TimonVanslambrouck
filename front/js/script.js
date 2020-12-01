@@ -12,6 +12,7 @@ window.onload = () => {
     getAllPokemon();
     getPokemonForms();
     document.getElementById('sorts').addEventListener('change', changeSort);
+    document.getElementById('nameSearch').value = '';
     document.getElementById('nameSearch').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
             searchName();
