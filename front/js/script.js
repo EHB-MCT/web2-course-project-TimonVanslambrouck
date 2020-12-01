@@ -9,10 +9,12 @@ window.onload = () => {
     let htmlAlphabeticalSorted = '';
     let htmlReverseAlphabeticalSorted = '';
     let nameData = '';
+    let selectedType = [];
     getAllPokemon();
     getPokemonForms();
     document.getElementById('sorts').addEventListener('change', changeSort);
     document.getElementById('nameSearch').value = '';
+    document.getElementById('sorts').value = 'sort';
     document.getElementById('nameSearch').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
             searchName();
@@ -45,8 +47,13 @@ window.onload = () => {
         let cpSelectedPokemon = document.getElementById('cpSelectedPokemon').value;
         let selectedId = Number(selectedPokemonID);
         let selectedName = nameData[selectedPokemonID].name;
-        let selectedForm = pokemonFormList[document.getElementById('forms').value].form;
-        let selectedType = pokemonFormList[document.getElementById('forms').value].type;
+        let selectedForm = '';
+        if (document.getElementById('forms').value == 'noData') {
+            selectedForm = 'Normal';
+        } else {
+            selectedType = pokemonFormList[document.getElementById('forms').value].type;
+            selectedForm = pokemonFormList[document.getElementById('forms').value].form;
+        }
         let selectedAttack = document.getElementById('attack').value;
         let selectedDefense = document.getElementById('defense').value;
         let selectedHp = document.getElementById('hp').value;
@@ -237,7 +244,7 @@ window.onload = () => {
         getAlphabeticalHtml();
     }
 
-    function getOverlay(button) {
+    async function getOverlay(button) {
         window.scrollTo(0, 0);
         document.body.classList.add("stop-scrolling");
         selectedPokemonID = document.getElementById(button).value;
@@ -252,6 +259,18 @@ window.onload = () => {
                 }
             } else if (pokemonFormList[id].pokemon_id > selectedPokemonID) {
                 break
+            }
+        }
+
+        if (htmlStringOptions == '') {
+            htmlStringOptions = `<option selected value='noData'>Normal</option>`;
+            selectedType = [];
+            let name = nameData[selectedPokemonID].name.toLowerCase();
+            const data = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
+            const resp = await data.json();
+            let types = resp.types
+            for (let id in types) {
+                selectedType.push(types[id].type.name);
             }
         }
 
