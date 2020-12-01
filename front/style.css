@@ -81,6 +81,10 @@ a:link {
     margin-bottom: 2%;
 }
 
+#nameSearch {
+    text-transform: capitalize;
+}
+
 .inputs input {
     display: inline-block;
     width: 14.5%;

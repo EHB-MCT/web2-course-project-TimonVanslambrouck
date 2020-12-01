@@ -5,6 +5,11 @@ window.onload = () => {
     let counter = 1;
     getTeam("https://web2-course-project-api-tv.herokuapp.com/api/pokemon");
     document.getElementById('types').addEventListener('change', filterByType);
+    document.getElementById('nameSearch').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            searchName();
+        }
+    });
 
     async function getTeam(url) {
         const resp = await fetch(url);
@@ -88,6 +93,17 @@ window.onload = () => {
 
     function showPokemonPage(id) {
         console.log(id);
+    }
+
+    function searchName() {
+        let search = document.getElementById('nameSearch').value;
+        search = capitalizeFirstLetter(search);
+        getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?name=${search}`)
+    }
+
+    // https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
 }
