@@ -43,17 +43,30 @@ app.use(bodyParser.json());
 pokeRouter.route('/pokemon').get((req, res) => {
     collection = db.collection("pokemon");
     const query = {};
+    console.log(req.query.shiny);
     if (req.query.form) {
         query.form = req.query.form;
     } else if (req.query.name) {
         query.name = req.query.name;
     } else if (req.query.type) {
-        query.type = req.query.type;
+        if (req.query.type) {
+            query.type = req.query.type
+            query.shiny = req.query.shiny;
+        } else {
+            query.type = req.query.type;
+        }
     } else if (req.query.cp) {
         query.cp = req.query.cp;
     } else if (req.query.shiny) {
-        query.shiny = req.query.shiny;
+        if (req.query.type) {
+            query.type = req.query.type
+            query.shiny = req.query.shiny;
+        } else {
+            query.shiny = req.query.shiny;
+        }
     }
+
+    console.log(query);
     collection.find(query).toArray((err, result) => {
         if (err) {
             return res.status(500).send(err);
@@ -96,7 +109,7 @@ app.get('/pokemon/:id', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Running on port ${port}`);
+    console.log(`Running on port ${port}, http://localhost:${port}/api/pokemon`);
     client.connect(err => {
         if (err) {
             throw err;
