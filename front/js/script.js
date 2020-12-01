@@ -49,8 +49,7 @@ window.onload = () => {
         let selectedAttack = document.getElementById('attack').value;
         let selectedDefense = document.getElementById('defense').value;
         let selectedHp = document.getElementById('hp').value;
-        if (0 >= selectedAttack > 16 || 0 >= selectedDefense > 16 || 0 >= selectedHp > 16 ||
-            selectedAttack === '' || selectedDefense === '' || selectedHp === '') {
+        if (await checkStats(selectedAttack, selectedDefense, selectedHp)) {
             return window.alert('please enter valid STATS!');
         }
         let selectedPokemon = await getPokemon(selectedName);
@@ -123,6 +122,16 @@ window.onload = () => {
             }
         }
         return evolutions
+    }
+
+    function checkStats(attack, defense, hp) {
+        if (attack == '' || defense == '' || hp == '') {
+            return true;
+        } else if (attack <= 0 || defense <= 0 || hp <= 0) {
+            return true;
+        } else if (attack > 15 || defense > 15 || hp > 15) {
+            return true;
+        }
     }
 
     async function checkCP(cp, form, id) {
