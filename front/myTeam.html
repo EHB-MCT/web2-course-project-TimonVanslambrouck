@@ -37,10 +37,16 @@
     <main class="mainWithGutter">
         <div class="inputs">
             <input class="form-control" id="nameSearch" placeholder="NAME" type="search">
+            <select class="form-control" id="types">
+                <option selected value="type">TYPE</option>
+            </select>
             <select class="form-control" id="sorts">
                 <option selected value="sort">SORT BY</option>
+                <option value="added">ADDED</option>
                 <option value="alphabetical">ALPHABETICAL (A-Z)</option>
                 <option value="reverseAlphabetical">ALPHABETICAL (Z-A)</option>
+                <option value="cp">CP (HIGH-LOW)</option>
+                <option value="reverseCp">CP (LOW-HIGH)</option>
                 <option value="pokedex">POKÉDEX (#1-...)</option>
                 <option value="reversePokedex">POKÉDEX (...-#1)</option>
             </select>

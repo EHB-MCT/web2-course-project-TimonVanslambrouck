@@ -115,7 +115,7 @@ a:link {
 .pokemonDisplay {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: 145px;
+    grid-template-rows: 160px;
     text-align: center;
     overflow: hidden;
 }
@@ -130,12 +130,13 @@ a:link {
 
 .pokemonName {
     margin: 0;
-    padding: 10px;
+    padding: 0;
     font-size: 20px;
     color: black;
 }
 
-.addButton {
+.addButton,
+.removeButton {
     position: absolute;
     bottom: 0;
     right: 0;
