@@ -54,9 +54,9 @@ window.onload = () => {
         }
         let selectedPokemon = await getPokemon(selectedName);
         let picturePokemon = selectedPokemon.sprites.front_default;
-        let shiny = false;
+        let shiny = '0';
         if (document.getElementById('shinyCheckbox').checked) {
-            shiny = true;
+            shiny = '1';
             picturePokemon = selectedPokemon.sprites.front_shiny;
         }
         let cpIsInvalid = await checkCP(cpSelectedPokemon, selectedForm, selectedId);

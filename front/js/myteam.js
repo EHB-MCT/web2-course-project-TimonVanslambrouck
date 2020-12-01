@@ -127,6 +127,8 @@ window.onload = () => {
             sortByCP(cpList);
         } else if (sort == 'reverseCp') {
             sortByCP(reverseCpList);
+        } else if (sort == 'shiny') {
+            getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?shiny=true`)
         }
     }
 
