@@ -7,6 +7,8 @@ window.onload = () => {
     let counter = 1;
     getTeam("https://web2-course-project-api-tv.herokuapp.com/api/pokemon", true);
     document.getElementById('types').addEventListener('change', filterByType);
+    document.getElementById('sorts').value = 'sort';
+    document.getElementById('types').value = 'type';
     document.getElementById('sorts').addEventListener('change', sortBy);
     document.getElementById('nameSearch').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
@@ -18,7 +20,6 @@ window.onload = () => {
         const resp = await fetch(url);
         const data = await resp.json();
         apiData = data;
-        console.log(apiData[0]);
         let htmlStringTotal = '';
         let htmlString = '';
         for (let id in data) {
@@ -37,20 +38,23 @@ window.onload = () => {
     </div>`;
             htmlStringTotal += htmlString;
             if (counter === 1) {
-                if (!cpList.includes(pokemonObject.cp))
-                    cpList.push(pokemonObject.cp);
+                if (!reverseCpList.includes(pokemonObject.cp))
+                    reverseCpList.push(pokemonObject.cp);
                 reverseAddedHtml = htmlString + reverseAddedHtml;
             }
         }
         if (counter === 1) {
-            cpList.sort(function (a, b) {
+            reverseCpList.sort(function (a, b) {
                 return a - b;
             });
-            reverseCpList = cpList.reverse();
+            for (let index = 0; index < reverseCpList.length; index++) {
+                cpList[reverseCpList.length - 1 - index] = reverseCpList[index];
+            }
         }
         if (replace == true) {
             document.getElementById('pokemonDisplay').innerHTML = htmlStringTotal;
         } else if (replace == false) {
+            console.log(htmlStringTotal);
             document.getElementById('pokemonDisplay').insertAdjacentHTML('beforeend', htmlStringTotal);
         }
         addEventListenersWithId();
@@ -126,13 +130,13 @@ window.onload = () => {
         }
     }
 
-    function sortByCP(list) {
+    async function sortByCP(list) {
         document.getElementById('pokemonDisplay').innerHTML = '';
-        console.log(list);
-        list.forEach(listElement => {
-            console.log(listElement);
-            getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?cp=${listElement}`, false)
-        });
+        // https://lavrton.com/javascript-loops-how-to-handle-async-await-6252dd3c795/
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
+        for (const listElement of list) {
+            await getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?cp=${listElement}`, false)
+        }
     }
 
     function showPokemonPage(id) {
