@@ -121,6 +121,10 @@ window.onload = () => {
                     getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?shiny=1`, true);
                 } else if (selectedSort == 'noShiny') {
                     getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?shiny=0`, true);
+                } else if (selectedSort == 'cp') {
+                    sortByCP(cpList);
+                } else if (selectedSort == 'reverseCp') {
+                    sortByCP(reverseCpList);
                 } else {
                     getTeam('https://web2-course-project-api-tv.herokuapp.com/api/pokemon', true);
                 }
@@ -134,6 +138,10 @@ window.onload = () => {
                 getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?type=${selectedType}&shiny=0`, true);
             else if (selectedSort == 'sort') {
                 getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?type=${selectedType}`, true);
+            } else if (selectedSort == 'cp') {
+                sortByCPWithType(selectedType, 'highLow');
+            } else if (selectedSort == 'reverseCp') {
+                sortByCPWithType(selectedType, 'lowHigh');
             }
         }
     }
@@ -154,13 +162,13 @@ window.onload = () => {
             document.getElementById('pokemonDisplay').innerHTML = reverseAddedHtml;
         } else if (selectedSort == 'cp') {
             if (selectedType !== 'type') {
-                sortByCPWithType(selectedType, 'highLow')
+                sortByCPWithType(selectedType, 'highLow');
             } else {
                 sortByCP(cpList);
             }
         } else if (selectedSort == 'reverseCp') {
             if (selectedType !== 'type') {
-                sortByCPWithType(selectedType, 'lowHigh')
+                sortByCPWithType(selectedType, 'lowHigh');
             } else {
                 sortByCP(reverseCpList);
             }
