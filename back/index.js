@@ -43,7 +43,6 @@ app.use(bodyParser.json());
 pokeRouter.route('/pokemon').get((req, res) => {
     collection = db.collection("pokemon");
     const query = {};
-    console.log(req.query.shiny);
     if (req.query.form) {
         query.form = req.query.form;
     } else if (req.query.name) {

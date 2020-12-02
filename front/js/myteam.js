@@ -108,17 +108,26 @@ window.onload = () => {
 
     function filterByType() {
         let selectedType = document.getElementById('types').value;
-        console.log(selectedType);
+        let selectedSort = document.getElementById('sorts').value;
         if (selectedType == 'type') {
-            return
+            if (selectedSort !== 'sort') {
+                if (selectedSort == 'shiny') {
+                    getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?shiny=1`, true);
+                } else if (selectedSort == 'noShiny') {
+                    getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?shiny=0`, true);
+                } else {
+                    getTeam('https://web2-course-project-api-tv.herokuapp.com/api/pokemon', true);
+                }
+            } else {
+                getTeam('https://web2-course-project-api-tv.herokuapp.com/api/pokemon', true);
+            }
         } else {
-            if (document.getElementById('sorts').value == 'shiny') {
-                getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?type=${selectedType}&shiny=1`, true)
-            } else if (document.getElementById('sorts').value == 'noShiny')
-                getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?type=${selectedType}&shiny=0`, true)
-            else if (document.getElementById('sorts').value == 'sort') {
-                console.log(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?type=${selectedType}`);
-                getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?type=${selectedType}`, true)
+            if (selectedSort == 'shiny') {
+                getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?type=${selectedType}&shiny=1`, true);
+            } else if (selectedSort == 'noShiny')
+                getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?type=${selectedType}&shiny=0`, true);
+            else if (selectedSort == 'sort') {
+                getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?type=${selectedType}`, true);
             }
         }
     }
@@ -128,7 +137,11 @@ window.onload = () => {
         let selectedSort = document.getElementById('sorts').value;
         let selectedType = document.getElementById('types').value;
         if (selectedSort == 'sort') {
-            return
+            if (selectedType !== 'type') {
+                getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?type=${selectedType}`, true);
+            } else {
+                getTeam('https://web2-course-project-api-tv.herokuapp.com/api/pokemon', true);
+            }
         } else if (selectedSort == 'added') {
             getTeam('https://web2-course-project-api-tv.herokuapp.com/api/pokemon', true);
         } else if (selectedSort == 'reverseAdded') {
@@ -144,7 +157,11 @@ window.onload = () => {
                 getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?shiny=1`, true)
             }
         } else if (selectedSort == 'noShiny') {
-            getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?shiny=0`, true)
+            if (selectedType !== 'type') {
+                getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?shiny=0&type=${selectedType}`, true)
+            } else {
+                getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?shiny=0`, true)
+            }
         }
     }
 
