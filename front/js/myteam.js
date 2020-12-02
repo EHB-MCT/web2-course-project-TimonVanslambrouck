@@ -17,6 +17,12 @@ window.onload = () => {
         }
     });
 
+    async function getTeamData(url) {
+        const resp = await fetch(url);
+        const data = await resp.json();
+        return data;
+    }
+
     async function getTeam(url, replace) {
         const resp = await fetch(url);
         const data = await resp.json();
@@ -39,8 +45,9 @@ window.onload = () => {
     </div>`;
             htmlStringTotal += htmlString;
             if (counter === 1) {
-                if (!reverseCpList.includes(pokemonObject.cp))
+                if (!reverseCpList.includes(pokemonObject.cp)) {
                     reverseCpList.push(pokemonObject.cp);
+                }
                 reverseAddedHtml = htmlString + reverseAddedHtml;
             }
         }
@@ -55,7 +62,6 @@ window.onload = () => {
         if (replace == true) {
             document.getElementById('pokemonDisplay').innerHTML = htmlStringTotal;
         } else if (replace == false) {
-            console.log(htmlStringTotal);
             document.getElementById('pokemonDisplay').insertAdjacentHTML('beforeend', htmlStringTotal);
         }
         addEventListenersWithId();
@@ -132,7 +138,7 @@ window.onload = () => {
         }
     }
 
-    function sortBy(e) {
+    async function sortBy(e) {
         e.preventDefault();
         let selectedSort = document.getElementById('sorts').value;
         let selectedType = document.getElementById('types').value;
@@ -147,9 +153,17 @@ window.onload = () => {
         } else if (selectedSort == 'reverseAdded') {
             document.getElementById('pokemonDisplay').innerHTML = reverseAddedHtml;
         } else if (selectedSort == 'cp') {
-            sortByCP(cpList);
+            if (selectedType !== 'type') {
+                sortByCPWithType(selectedType, 'highLow')
+            } else {
+                sortByCP(cpList);
+            }
         } else if (selectedSort == 'reverseCp') {
-            sortByCP(reverseCpList);
+            if (selectedType !== 'type') {
+                sortByCPWithType(selectedType, 'lowHigh')
+            } else {
+                sortByCP(reverseCpList);
+            }
         } else if (selectedSort == 'shiny') {
             if (selectedType !== 'type') {
                 getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?shiny=1&type=${selectedType}`, true)
@@ -163,6 +177,27 @@ window.onload = () => {
                 getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?shiny=0`, true)
             }
         }
+    }
+
+    async function sortByCPWithType(selectedType, direction) {
+        let sortedTypeList = [];
+        let typeData = await getTeamData(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?type=${selectedType}`);
+        for (let id in typeData) {
+            if (!sortedTypeList.includes(typeData[id].cp)) {
+                sortedTypeList.push(typeData[id].cp);
+            }
+            if (direction == 'highLow') {
+                sortedTypeList.sort(function (a, b) {
+                    return b - a;
+                });
+            } else if (direction == 'lowHigh') {
+                sortedTypeList.sort(function (a, b) {
+                    return a - b;
+                });
+            }
+
+        }
+        sortByCP(sortedTypeList);
     }
 
     async function sortByCP(list) {
