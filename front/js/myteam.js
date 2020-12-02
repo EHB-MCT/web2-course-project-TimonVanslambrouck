@@ -113,6 +113,7 @@ window.onload = () => {
     }
 
     function filterByType() {
+        document.getElementById('nameSearch').value = '';
         let selectedType = document.getElementById('types').value;
         let selectedSort = document.getElementById('sorts').value;
         if (selectedType == 'type') {
@@ -156,6 +157,7 @@ window.onload = () => {
 
     async function sortBy(e) {
         e.preventDefault();
+        document.getElementById('nameSearch').value = '';
         let selectedSort = document.getElementById('sorts').value;
         let selectedType = document.getElementById('types').value;
         if (selectedSort == 'sort') {
@@ -256,6 +258,8 @@ window.onload = () => {
 
     function searchName() {
         let search = document.getElementById('nameSearch').value;
+        document.getElementById('sorts').value = 'sort';
+        document.getElementById('types').value = 'type';
         search = capitalizeFirstLetter(search);
         getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?name=${search}`, true)
     }

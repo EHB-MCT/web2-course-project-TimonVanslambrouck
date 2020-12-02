@@ -71,7 +71,7 @@ a:link {
     font-weight: normal;
 }
 
-/* INDEX */
+/* INDEX + MYTEAM */
 
 .mainWithGutter {
     margin: 0 3%;
@@ -87,7 +87,7 @@ a:link {
 
 .inputs input {
     display: inline-block;
-    width: 14.5%;
+    width: 250px;
     height: 40px;
     font-size: 20px;
     margin-right: 5%;
@@ -114,6 +114,12 @@ a:link {
     background-repeat: no-repeat;
     -webkit-appearance: none;
     -moz-appearance: none;
+}
+
+.or {
+    display: inline-block;
+    margin-left: -2.5%;
+    margin-right: 2.5%;
 }
 
 .pokemonDisplay {
