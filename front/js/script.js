@@ -60,7 +60,7 @@ window.onload = () => {
         if (await checkStats(selectedAttack, selectedDefense, selectedHp)) {
             return window.alert('please enter valid STATS!');
         }
-        let selectedPokemon = await getPokemon(selectedName);
+        let selectedPokemon = await getPokemon(selectedId);
         let picturePokemon = selectedPokemon.sprites.front_default;
         let shiny = '0';
         if (document.getElementById('shinyCheckbox').checked) {
@@ -106,9 +106,8 @@ window.onload = () => {
         closeOverlay();
     }
 
-    async function getPokemon(name) {
-        name = name.toLowerCase();
-        const resp = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+    async function getPokemon(id) {
+        const resp = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
         const data = resp.json();
         return data;
     }
