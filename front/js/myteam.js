@@ -286,10 +286,11 @@ window.onload = () => {
             shiny = 'Yes';
         }
         let htmlString =
-            `<a id="backButton" href="./myTeam.html"><img id="backArrow" src="./svg/arrow.svg"> <span id="back">Back</span></a>
+            `<a id="backButton" href="./myTeam.html"><img id="backArrow" src="./svg/arrow.svg"><span id="back">Back</span></a>
+            <a value='test' id="deleteButton" href="#">Delete</a>
             <div class="firstColumn">
         <h2>CP:</h2>
-        <h2>${cp} CP</h2>
+        <h2>${cp} CP </h2>
         <h2>Attack:</h2>
         <h2><img src="./svg/${attack}.svg"></h2>
         <h2>Defence:</h2>
@@ -324,10 +325,16 @@ window.onload = () => {
         <h2> No Evolution</h2>
         </div>`
         }
-        htmlString += '</div>';
+        htmlString += `</div> <button id='idButton' value=${pokemonData._id}></button>`;
         document.getElementById('specificPokemon').innerHTML = htmlString;
+        document.getElementById('deleteButton').addEventListener('click', deletePokemon);
         document.getElementById('specificPokemon').style.display = 'grid';
 
+    }
+
+    function deletePokemon(e) {
+        e.preventDefault;
+        document.getElementById('idButton').value
     }
 
     function searchName() {
