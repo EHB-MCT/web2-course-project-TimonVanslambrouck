@@ -123,11 +123,6 @@ pokeRouter.route('/pokemon/:pokemonId').get((req, res) => {
         }
         return collection.findOneAndUpdate(query, update, options)
             .then(updatedDocument => {
-                if (updatedDocument) {
-                    console.log(`Successfully updated document: ${updatedDocument}.`)
-                } else {
-                    console.log("No document matches the provided query.")
-                }
                 return updatedDocument
             })
             .catch(err => console.error(`Failed to find and update document: ${err}`))
@@ -138,10 +133,6 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api', pokeRouter);
-
-app.get('/pokemon/:id', (req, res) => {
-
-});
 
 app.listen(port, () => {
     console.log(`Running on port ${port}, http://localhost:${port}/api/pokemon`);
