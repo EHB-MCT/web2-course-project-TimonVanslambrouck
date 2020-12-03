@@ -6,6 +6,7 @@ window.onload = () => {
     let reverseCpList = [];
     let counter = 1;
     getTeam("https://web2-course-project-api-tv.herokuapp.com/api/pokemon", true);
+    document.getElementById('specificPokemon').style.display = 'none';
     document.getElementById('types').addEventListener('change', filterByType);
     document.getElementById('sorts').value = 'sort';
     document.getElementById('types').value = 'type';
@@ -33,7 +34,7 @@ window.onload = () => {
             let pokemonObject = data[id];
             htmlString =
                 `<div class="pokemon">
-        <button type="submit" id="selectPokemonButton${pokemonObject._id}" value=${pokemonObject.id}>
+        <button type="submit" id="selectPokemonButton${pokemonObject._id}">
             <div class="pokemonPicutreBox">
                 <img class="pokemonPicture"
                     src="${pokemonObject.picture}"
@@ -207,24 +208,35 @@ window.onload = () => {
 
     async function sortByAddedWithType(selectedType, direction) {
         let addedList = [];
-        let typeData = await getTeamData(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?type=${selectedType}`);
+        let typeData = await getTeamData(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?type=${selectedType}`, true);
         for (let id in typeData) {
-            if (!addedList.includes(typeData[id].cp)) {
-                addedList.push(typeData[id].cp);
+            if (!addedList.includes(typeData[id]._id)) {
+                addedList.push(typeData[id]._id);
             }
         }
         if (direction == 'newOld') {
             addedList.reverse();
-            sortByCP(addedList);
+            console.log(addedList);
+            sortByID(addedList)
         } else if (direction == 'oldNew') {
-            sortByCP(addedList);
+            console.log(addedList);
+            sortByID(addedList)
         }
+
+    }
+
+    async function sortByID(list) {
+        document.getElementById('pokemonDisplay').innerHTML = '';
+        list.forEach(listElement => {
+            getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon/${listElement}`, false);
+
+        });
 
     }
 
     async function sortByCPWithType(selectedType, direction) {
         let sortedTypeList = [];
-        let typeData = await getTeamData(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?type=${selectedType}`);
+        let typeData = await getTeamData(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?type=${selectedType}`, true);
         for (let id in typeData) {
             if (!sortedTypeList.includes(typeData[id].cp)) {
                 sortedTypeList.push(typeData[id].cp);
@@ -252,8 +264,70 @@ window.onload = () => {
         }
     }
 
-    function showPokemonPage(id) {
+    async function showPokemonPage(id) {
         console.log(id);
+        document.getElementById('inputsMyTeam').style.display = 'none';
+        document.getElementById('pokemonDisplay').style.display = 'none';
+        const resp = await fetch(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon/${id}`)
+        const data = await resp.json();
+        let pokemonData = data[0];
+        let name = pokemonData.name;
+        let form = pokemonData.form;
+        let cp = Number(pokemonData.cp);
+        let attack = Number(pokemonData.attack);
+        let defense = Number(pokemonData.defense);
+        let hp = Number(pokemonData.hp);
+        let iv = Number((attack + defense + hp) / 45 * 100);
+        iv = Math.floor(iv);
+        let distance = pokemonData.distance;
+        let pictureId = pokemonData.id;
+        let shiny = 'No';
+        if (Number(pokemonData.shiny) == 1) {
+            shiny = 'Yes';
+        }
+        let htmlString =
+            `<a id="backButton" href="./myTeam.html"><img id="backArrow" src="./svg/arrow.svg"> <span id="back">Back</span></a>
+            <div class="firstColumn">
+        <h2>CP:</h2>
+        <h2>${cp} CP</h2>
+        <h2>Attack:</h2>
+        <h2><img src="./svg/${attack}.svg"></h2>
+        <h2>Defence:</h2>
+        <h2><img src="./svg/${defense}.svg"></h2>
+        <h2>HP:</h2>
+        <h2><img src="./svg/${hp}.svg"></h2>
+        <h2>IV:</h2>
+        <h2>${iv}%</h2>
+        <h2>Distance:</h2>
+        <h2>${distance} KM</h2>
+        <h2>Form:</h2>
+        <h2>${form}</h2>
+        <h2>Shiny:</h2>
+        <h2>${shiny}</h2>
+
+    </div>
+    <div class="secondColumn">
+        <h1 id="">${name}</h1>
+        <img id="bigImage" src="https://pokeres.bastionbot.org/images/pokemon/${pictureId}.png" alt="picture of ${name}">
+    </div> `;
+
+        if (pokemonData.evolution !== 0) {
+            let evolution = pokemonData.evolution[0];
+            htmlString += `<div class="thirdColumn">
+        <h2>Evolution:</h2>
+        <h1>${evolution.pokemon_name}</h1>
+        <img id="smallImage" src="https://pokeres.bastionbot.org/images/pokemon/${evolution.pokemon_id}.png" alt="picture of ${evolution.pokemon_name}">
+        <h3>${evolution.candy_required} Candies</h3>
+        </div>`
+        } else {
+            htmlString += `<div class="thirdColumn">
+        <h2> No Evolution</h2>
+        </div>`
+        }
+        htmlString += '</div>';
+        document.getElementById('specificPokemon').innerHTML = htmlString;
+        document.getElementById('specificPokemon').style.display = 'grid';
+
     }
 
     function searchName() {

@@ -58,7 +58,7 @@ window.onload = () => {
         let selectedDefense = document.getElementById('defense').value;
         let selectedHp = document.getElementById('hp').value;
         if (checkStats(selectedAttack, selectedDefense, selectedHp)) {
-            return window.alert('please enter valid STATS!');
+            return window.alert('please enter valid STATS! (between 0-15)');
         }
         let selectedPokemon = await getPokemon(selectedId);
         let picturePokemon = selectedPokemon.sprites.front_default;
