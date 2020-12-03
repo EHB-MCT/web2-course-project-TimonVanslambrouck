@@ -88,21 +88,50 @@ pokeRouter.route('/pokemon').get((req, res) => {
 });
 
 pokeRouter.route('/pokemon/:pokemonId').get((req, res) => {
-    collection = db.collection("pokemon");
-    // Source: https://stackoverflow.com/questions/13850819/can-i-determine-if-a-string-is-a-mongodb-objectid
-    if (req.params.pokemonId.match(/^[0-9a-fA-F]{24}$/) === null) {
-        return res.send('Not a valid ID!');
-    }
-    const query = {
-        _id: ObjectId(req.params.pokemonId)
-    }
-    collection.find(query).toArray((err, result) => {
-        if (err) {
-            return res.status(500).send(err);
+        collection = db.collection("pokemon");
+        // Source: https://stackoverflow.com/questions/13850819/can-i-determine-if-a-string-is-a-mongodb-objectid
+        if (req.params.pokemonId.match(/^[0-9a-fA-F]{24}$/) === null) {
+            return res.send('Not a valid ID!');
         }
-        return res.json(result);
+        const query = {
+            _id: ObjectId(req.params.pokemonId)
+        }
+        collection.find(query).toArray((err, result) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+            return res.json(result);
+        })
     })
-});
+    .put((req, res) => {
+        collection = db.collection("pokemon");
+        // Source: https://stackoverflow.com/questions/13850819/can-i-determine-if-a-string-is-a-mongodb-objectid
+        if (req.params.pokemonId.match(/^[0-9a-fA-F]{24}$/) === null) {
+            return res.send('Not a valid ID!');
+        }
+        const query = {
+            _id: ObjectId(req.params.pokemonId)
+        }
+
+        const update = {
+            "$set": {
+                "cp": req.body.cp
+            }
+        }
+        const options = {
+            "upsert": false
+        }
+        return collection.findOneAndUpdate(query, update, options)
+            .then(updatedDocument => {
+                if (updatedDocument) {
+                    console.log(`Successfully updated document: ${updatedDocument}.`)
+                } else {
+                    console.log("No document matches the provided query.")
+                }
+                return updatedDocument
+            })
+            .catch(err => console.error(`Failed to find and update document: ${err}`))
+    })
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname + '/public/info.html'));
