@@ -51,10 +51,17 @@ pokeRouter.route('/pokemon').get((req, res) => {
         if (req.query.shiny) {
             query.type = req.query.type
             query.shiny = req.query.shiny;
+        } else if (req.query.cp) {
+            query.type = req.query.type;
+            query.cp = req.query.cp
         } else {
             query.type = req.query.type;
         }
     } else if (req.query.cp) {
+        if (req.query.type) {
+            query.type = req.query.type;
+            query.cp = req.query.cp;
+        }
         query.cp = req.query.cp;
     } else if (req.query.shiny) {
         if (req.query.type) {

@@ -252,15 +252,21 @@ window.onload = () => {
             }
 
         }
-        sortByCP(sortedTypeList);
+        sortByCP(sortedTypeList, selectedType);
     }
 
-    async function sortByCP(list) {
+    async function sortByCP(list, type) {
         document.getElementById('pokemonDisplay').innerHTML = '';
         // https://lavrton.com/javascript-loops-how-to-handle-async-await-6252dd3c795/
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
-        for (const listElement of list) {
-            await getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?cp=${listElement}`, false)
+        if (type) {
+            for (const listElement of list) {
+                await getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?cp=${listElement}&type=${type}`, false)
+            }
+        } else {
+            for (const listElement of list) {
+                await getTeam(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon?cp=${listElement}`, false)
+            }
         }
     }
 
