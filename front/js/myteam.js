@@ -403,7 +403,6 @@ window.onload = () => {
     }
 
     async function powerUpPokemon(id) {
-        console.log(id);
         window.scrollTo(0, 0);
         document.body.classList.add("stop-scrolling");
         let html = `<div class="askDiv" id="askDivPowerUp">
@@ -469,10 +468,11 @@ window.onload = () => {
 
     async function updatePokemon(id, cp) {
         const url = `https://web2-course-project-api-tv.herokuapp.com/api/pokemon/${id}`;
+        console.log(url);
         const data = {
-            "cp": cp
-        }
-        fetch(url, {
+            "cp": `${cp}`
+        };
+        await fetch(url, {
             method: "PUT",
             body: JSON.stringify(data),
             headers: {

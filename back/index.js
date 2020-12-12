@@ -71,8 +71,6 @@ pokeRouter.route('/pokemon').get((req, res) => {
             query.shiny = req.query.shiny;
         }
     }
-
-    console.log(query);
     collection.find(query).toArray((err, result) => {
         if (err) {
             return res.status(500).send(err);
@@ -96,7 +94,6 @@ pokeRouter.route('/pokemon/:pokemonId').get((req, res) => {
         const query = {
             _id: ObjectId(req.params.pokemonId)
         }
-        console.log()
         collection.find(query).toArray((err, result) => {
             if (err) {
                 return res.status(500).send(err);
@@ -106,10 +103,6 @@ pokeRouter.route('/pokemon/:pokemonId').get((req, res) => {
     })
     .put((req, res) => {
         collection = db.collection("pokemon");
-        // Source: https://stackoverflow.com/questions/13850819/can-i-determine-if-a-string-is-a-mongodb-objectid
-        if (req.params.pokemonId.match(/^[0-9a-fA-F]{24}$/) === null) {
-            return res.send('Not a valid ID!');
-        }
         const query = {
             _id: ObjectId(req.params.pokemonId)
         }
@@ -124,7 +117,7 @@ pokeRouter.route('/pokemon/:pokemonId').get((req, res) => {
         }
         return collection.findOneAndUpdate(query, update, options)
             .then(updatedDocument => {
-                return updatedDocument
+                return res.sendStatus(200);
             })
             .catch(err => console.error(`Failed to find and update document: ${err}`))
     })
