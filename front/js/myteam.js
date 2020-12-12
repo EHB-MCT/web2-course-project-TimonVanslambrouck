@@ -350,7 +350,6 @@ window.onload = () => {
             await fetch(url, {
                 method: "DELETE"
             });
-            window.location.href = "https://web2-course-project-site-tv.herokuapp.com/myTeam.html";
         }
     }
 
