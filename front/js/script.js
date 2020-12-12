@@ -10,6 +10,7 @@ window.onload = () => {
     let htmlReverseAlphabeticalSorted = '';
     let nameData = '';
     let selectedType = [];
+    let counter = 0;
     getAllPokemon();
     getPokemonForms();
     document.getElementById('sorts').addEventListener('change', changeSort);
@@ -208,6 +209,7 @@ window.onload = () => {
         nameData = data;
         let htmlString = '';
         for (let id in data) {
+            counter++;
             let pokemonName = data[id].name;
             pokemonNameList.push(pokemonName);
             htmlString = `<div class="pokemon">
@@ -223,6 +225,9 @@ window.onload = () => {
         </div>`;
             htmlPokedexSorted += htmlString;
             htmlReversePokedexSorted = htmlString + htmlReversePokedexSorted;
+            if (counter === 1) {
+                document.getElementById('pokemonDisplay').innerHTML = '';
+            }
             document.getElementById('pokemonDisplay').insertAdjacentHTML('beforeend', htmlString);
             document.getElementById(`selectPokemonButton${data[id].id}`).addEventListener('click', function () {
                 getOverlay(`selectPokemonButton${data[id].id}`);
