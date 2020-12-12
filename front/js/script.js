@@ -92,7 +92,7 @@ window.onload = () => {
         };
 
         console.log(pokemon)
-        // source: https: //www.freecodecamp.org/news/javascript-fetch-api-tutorial-with-js-fetch-post-and-header-examples/
+        // source: https://www.freecodecamp.org/news/javascript-fetch-api-tutorial-with-js-fetch-post-and-header-examples/
         fetch('https://web2-course-project-api-tv.herokuapp.com/api/pokemon', {
             method: "POST",
             body: JSON.stringify(pokemon),
