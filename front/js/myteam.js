@@ -345,7 +345,7 @@ window.onload = () => {
 
     async function deletePokemon(id) {
         console.log(id);
-        let url = `http://localhost:4000/api/pokemon/${id}`
+        let url = `https://web2-course-project-api-tv.herokuapp.com/${id}`
         if (confirm("Are you sure you want to delete this pokemon?")) {
             fetch(url, {
                 method: "DELETE",
