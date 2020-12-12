@@ -121,6 +121,33 @@ pokeRouter.route('/pokemon/:pokemonId').get((req, res) => {
             })
             .catch(err => console.error(`Failed to find and update document: ${err}`))
     })
+    .patch((req, res) => {
+        collection = db.collection("pokemon");
+        const query = {
+            _id: ObjectId(req.params.pokemonId)
+        };
+        const update = {
+            "_id": ObjectId(req.params.pokemonId),
+            "id": req.body.id,
+            "name": req.body.name,
+            "form": req.body.form,
+            "type": req.body.type,
+            "shiny": req.body.shiny,
+            "cp": req.body.cp,
+            "evolution": req.body.evolution,
+            "distance": req.body.distance,
+            "picture": req.body.picture,
+            "attack": req.body.attack,
+            "defense": req.body.defense,
+            "hp": req.body.hp
+        };
+        collection.replaceOne(query, update)
+            .then(updatedDocument => {
+                return res.sendStatus(200);
+            })
+            .catch(err => console.error(`Failed to find and update document: ${err}`))
+
+    })
     .delete((req, res) => {
         collection = db.collection("pokemon");
         const query = {
