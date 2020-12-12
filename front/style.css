@@ -373,3 +373,41 @@ a:link {
         grid-template-columns: repeat(6, 1fr);
     }
 }
+
+@media only screen and (max-width: 752px) {
+    .pokemonDisplay {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media only screen and (max-width: 622px) {
+    .pokemonDisplay {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .inputs input,
+    .inputs select {
+        display: inline-block;
+        width: 150px;
+        height: 40px;
+        font-size: 20px;
+        margin-right: 5%;
+    }
+}
+
+@media only screen and (max-width: 506px) {
+    .pokemonDisplay {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media only screen and (max-width: 386px) {
+    .pokemonDisplay {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #sorts,
+    #types {
+        margin-top: 5%;
+    }
+}
