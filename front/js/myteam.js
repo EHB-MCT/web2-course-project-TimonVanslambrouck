@@ -344,17 +344,12 @@ window.onload = () => {
     }
 
     async function deletePokemon(id, name) {
-        console.log(id);
-        let url = `https://web2-course-project-api-tv.herokuapp.com/${id}`
-        console.log(url);
+        let url = `https://web2-course-project-api-tv.herokuapp.com/api/pokemon/${id}`;
         if (confirm(`Are you sure you want to delete ${name}?`)) {
             await fetch(url, {
-                method: "DELETE",
-                body: '',
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8"
-                }
+                method: "DELETE"
             });
+            window.location.href = 'https://web2-course-project-site-tv.herokuapp.com/myTeam.html'
         }
     }
 
