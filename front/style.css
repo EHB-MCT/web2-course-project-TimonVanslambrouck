@@ -310,6 +310,10 @@ a:link {
     margin-left: 60px;
 }
 
+.ivBar {
+    width: 50%;
+}
+
 #deleteButton {
     padding: 5px 100px;
     background-color: #4DAC8C;

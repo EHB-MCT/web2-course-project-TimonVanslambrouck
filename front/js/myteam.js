@@ -286,6 +286,9 @@ window.onload = () => {
         let iv = Number((attack + defense + hp) / 45 * 100);
         iv = Math.floor(iv);
         let distance = pokemonData.distance;
+        if (distance === 0) {
+            distance = 'NO DATA';
+        }
         let pictureId = pokemonData.id;
         let shiny = 'No';
         if (Number(pokemonData.shiny) == 1) {
@@ -293,20 +296,20 @@ window.onload = () => {
         }
         let htmlString =
             `<a id="backButton" href="./myTeam.html"><img id="backArrow" src="./svg/arrow.svg"><span id="back">Back</span></a>
-            <a value='test' id="deleteButton" href="#">Delete</a>
+            <a id="deleteButton" href="#">Delete</a>
             <div class="firstColumn">
         <h2>CP:</h2>
         <h2>${cp} CP </h2>
         <h2>Attack:</h2>
-        <h2><img src="./svg/${attack}.svg"></h2>
+        <h2><img class='ivBar' src="./svg/${attack}.svg"></h2>
         <h2>Defence:</h2>
-        <h2><img src="./svg/${defense}.svg"></h2>
+        <h2><img class='ivBar' src="./svg/${defense}.svg"></h2>
         <h2>HP:</h2>
-        <h2><img src="./svg/${hp}.svg"></h2>
+        <h2><img class='ivBar' src="./svg/${hp}.svg"></h2>
         <h2>IV:</h2>
         <h2>${iv}%</h2>
         <h2>Distance:</h2>
-        <h2>${distance} KM</h2>
+        <h2>${distance}</h2>
         <h2>Form:</h2>
         <h2>${form}</h2>
         <h2>Shiny:</h2>
@@ -333,14 +336,25 @@ window.onload = () => {
         }
         htmlString += `</div> <button id='idButton' value=${pokemonData._id}></button>`;
         document.getElementById('specificPokemon').innerHTML = htmlString;
-        document.getElementById('deleteButton').addEventListener('click', deletePokemon);
+        document.getElementById('deleteButton').addEventListener('click', function () {
+            deletePokemon(id);
+        });
         document.getElementById('specificPokemon').style.display = 'grid';
 
     }
 
-    function deletePokemon(e) {
-        e.preventDefault;
-        document.getElementById('idButton').value
+    async function deletePokemon(id) {
+        console.log(id);
+        let url = `http://localhost:4000/api/pokemon/${id}`
+        if (confirm("Are you sure you want to delete this pokemon?")) {
+            fetch(url, {
+                method: "DELETE",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            });
+            window.location.href = "https://web2-course-project-site-tv.herokuapp.com/myTeam.html";
+        }
     }
 
     function searchName() {

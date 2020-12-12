@@ -96,6 +96,7 @@ pokeRouter.route('/pokemon/:pokemonId').get((req, res) => {
         const query = {
             _id: ObjectId(req.params.pokemonId)
         }
+        console.log()
         collection.find(query).toArray((err, result) => {
             if (err) {
                 return res.status(500).send(err);
@@ -126,6 +127,15 @@ pokeRouter.route('/pokemon/:pokemonId').get((req, res) => {
                 return updatedDocument
             })
             .catch(err => console.error(`Failed to find and update document: ${err}`))
+    })
+    .delete((req, res) => {
+        collection = db.collection("pokemon");
+        const query = {
+            _id: ObjectId(req.params.pokemonId)
+        };
+        collection.deleteOne(query);
+
+        return res.sendStatus(204);
     })
 
 app.get('/', (req, res) => {
