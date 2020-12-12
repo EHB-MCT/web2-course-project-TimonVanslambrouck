@@ -304,6 +304,10 @@ a:link {
     margin-top: 12%;
 }
 
+.thirdColumn {
+    text-align: center;
+}
+
 #bigImage {
     margin-top: 10%;
     width: 90%;
@@ -351,7 +355,7 @@ a:link {
 
 #evolveButton {
     margin-top: 5%;
-    width: 120px;
+    width: 12-30px;
     background-color: #4DAC8C;
     color: white;
     padding: 10px 40px;
@@ -430,7 +434,7 @@ a:link {
 
 #powerUpButton {
     margin-top: 5%;
-    width: 145px;
+    width: 150px;
     background-color: #4DAC8C;
     color: white;
     padding: 10px 40px;

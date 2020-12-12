@@ -333,7 +333,7 @@ window.onload = () => {
     <div class="secondColumn">
         <h1 id="">${name}</h1>
         <img id="bigImage" src="https://pokeres.bastionbot.org/images/pokemon/${pictureId}.png" alt="picture of ${name}">
-        <button id="powerUpButton">Power Up</button>
+        <button id="powerUpButton">POWER UP</button>
     </div> `;
 
         if (pokemonData.evolution !== 0) {
@@ -343,7 +343,7 @@ window.onload = () => {
         <h1>${evolution.pokemon_name}</h1>
         <img id="smallImage" src="https://pokeres.bastionbot.org/images/pokemon/${evolution.pokemon_id}.png" alt="picture of ${evolution.pokemon_name}">
         <h3>${evolution.candy_required} Candies</h3>
-        <button id="evolveButton">Evolve</button>
+        <button id="evolveButton">EVOLVE</button>
         </div>`
         } else {
             htmlString += `<div class="thirdColumn">
@@ -479,7 +479,6 @@ window.onload = () => {
                 "Content-type": "application/json; charset=UTF-8"
             }
         });
-        window.alert('Pokémon has been updated!');
     }
 
     // https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript
