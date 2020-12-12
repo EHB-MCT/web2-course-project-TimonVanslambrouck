@@ -17,6 +17,13 @@ window.onload = () => {
             searchName();
         }
     });
+    document.getElementById('scrollUpArrow').addEventListener('click', function () {
+        // https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
+        document.body.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    })
 
     async function getTeamData(url) {
         const resp = await fetch(url);
@@ -279,6 +286,7 @@ window.onload = () => {
 
     async function showPokemonPage(id) {
         console.log(id);
+        document.getElementById('scrollUpArrow').style.display = 'none';
         document.getElementById('inputsMyTeam').style.display = 'none';
         document.getElementById('pokemonDisplay').style.display = 'none';
         const resp = await fetch(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon/${id}`)
@@ -306,7 +314,7 @@ window.onload = () => {
             <a id="deleteButton" href="#">Delete</a>
             <div class="firstColumn">
         <h2>CP:</h2>
-        <h2>${cp} CP </h2>
+        <h2>${cp} CP  </h2>
         <h2>Attack:</h2>
         <h2><img class='ivBar' src="./svg/${attack}.svg"></h2>
         <h2>Defence:</h2>

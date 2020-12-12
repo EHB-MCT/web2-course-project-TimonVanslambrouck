@@ -21,6 +21,13 @@ window.onload = () => {
             searchName();
         }
     });
+    document.getElementById('scrollUpArrow').addEventListener('click', function () {
+        // https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
+        document.body.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    })
 
     function changeSort(e) {
         e.preventDefault();
