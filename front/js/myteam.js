@@ -432,7 +432,9 @@ window.onload = () => {
         document.getElementById('askButtonYes').addEventListener('click', async function () {
             let cp = document.getElementById('newCP').value;
             await updatePokemon(id, cp);
-            window.location.href = 'https://web2-course-project-site-tv.herokuapp.com/myTeam.html'
+            setTimeout(function () {
+                window.location.href = 'https://web2-course-project-site-tv.herokuapp.com/myTeam.html';
+            }, 1);
         });
         document.getElementById('closeButton').addEventListener('click', function () {
             closeOverlay();
