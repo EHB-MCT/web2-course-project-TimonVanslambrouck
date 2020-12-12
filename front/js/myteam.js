@@ -337,16 +337,16 @@ window.onload = () => {
         htmlString += `</div> <button id='idButton' value=${pokemonData._id}></button>`;
         document.getElementById('specificPokemon').innerHTML = htmlString;
         document.getElementById('deleteButton').addEventListener('click', function () {
-            deletePokemon(id);
+            deletePokemon(id, name);
         });
         document.getElementById('specificPokemon').style.display = 'grid';
 
     }
 
-    async function deletePokemon(id) {
+    async function deletePokemon(id, name) {
         console.log(id);
         let url = `https://web2-course-project-api-tv.herokuapp.com/${id}`
-        if (confirm("Are you sure you want to delete this pokemon?")) {
+        if (confirm(`Are you sure you want to delete ${name}?`)) {
             await fetch(url, {
                 method: "DELETE",
                 body: '',
