@@ -145,11 +145,21 @@ a:link {
     color: black;
 }
 
-.addButton,
-.removeButton {
+.pokemon {
+    position: relative;
+}
+
+.addButton {
     position: absolute;
     bottom: 0;
     right: 0;
+}
+
+.removeButton {
+    position: absolute;
+    bottom: 50px;
+    right: 20px;
+    cursor: pointer
 }
 
 .overlay {

@@ -30,19 +30,20 @@ window.onload = () => {
         apiData = data;
         let htmlStringTotal = '';
         let htmlString = '';
+        let pokemonObject = '';
         for (let id in data) {
-            let pokemonObject = data[id];
+            pokemonObject = data[id];
             htmlString =
                 `<div class="pokemon">
         <button type="submit" id="selectPokemonButton${pokemonObject._id}">
             <div class="pokemonPicutreBox">
                 <img class="pokemonPicture"
                     src="${pokemonObject.picture}"
-                    alt="picture of ${pokemonObject.name}">
-                <a href="./index.html"><img class="removeButton" src="./svg/min.svg" alt=""></a>
+                    alt="picture of ${pokemonObject.name}">                
             </div>
             <h2 class="pokemonName">${pokemonObject.name} <br> ${pokemonObject.cp} CP</h2>
         </button>
+        <img id="deleteImage${pokemonObject._id}" class="removeButton" src="./svg/min.svg" alt="">
     </div>`;
             htmlStringTotal += htmlString;
             if (counter === 1) {
@@ -75,9 +76,15 @@ window.onload = () => {
     function addEventListenersWithId() {
         for (let id in apiData) {
             let pokemonObjectId = apiData[id]._id;
+            let pokemonName = apiData[id].name;
             if (document.getElementById(`selectPokemonButton${pokemonObjectId}`) !== null) {
                 document.getElementById(`selectPokemonButton${pokemonObjectId}`).addEventListener('click', function () {
                     showPokemonPage(pokemonObjectId);
+                });
+            }
+            if (document.getElementById(`deleteImage${pokemonObjectId}`) !== null) {
+                document.getElementById(`deleteImage${pokemonObjectId}`).addEventListener('click', function () {
+                    deletePokemon(pokemonObjectId, pokemonName);
                 });
             }
         }
