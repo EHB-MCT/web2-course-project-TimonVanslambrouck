@@ -285,7 +285,6 @@ window.onload = () => {
     }
 
     async function showPokemonPage(id) {
-        console.log(id);
         document.getElementById('scrollUpArrow').style.display = 'none';
         document.getElementById('inputsMyTeam').style.display = 'none';
         document.getElementById('pokemonDisplay').style.display = 'none';
@@ -334,6 +333,7 @@ window.onload = () => {
     <div class="secondColumn">
         <h1 id="">${name}</h1>
         <img id="bigImage" src="https://pokeres.bastionbot.org/images/pokemon/${pictureId}.png" alt="picture of ${name}">
+        <button id="powerUpButton">Power Up</button>
     </div> `;
 
         if (pokemonData.evolution !== 0) {
@@ -343,18 +343,109 @@ window.onload = () => {
         <h1>${evolution.pokemon_name}</h1>
         <img id="smallImage" src="https://pokeres.bastionbot.org/images/pokemon/${evolution.pokemon_id}.png" alt="picture of ${evolution.pokemon_name}">
         <h3>${evolution.candy_required} Candies</h3>
+        <button id="evolveButton">Evolve</button>
         </div>`
         } else {
             htmlString += `<div class="thirdColumn">
         <h2> No Evolution</h2>
         </div>`
         }
-        htmlString += `</div> <button id='idButton' value=${pokemonData._id}></button>`;
         document.getElementById('specificPokemon').innerHTML = htmlString;
         document.getElementById('deleteButton').addEventListener('click', function () {
             deletePokemon(id, name);
         });
+        document.getElementById('powerUpButton').addEventListener('click', function () {
+            powerUpPokemon(id);
+        });
+        if (pokemonData.evolution !== 0) {
+            document.getElementById('evolveButton').addEventListener('click', function () {
+                evolvePokemon(id);
+            });
+        }
         document.getElementById('specificPokemon').style.display = 'grid';
+
+    }
+
+    async function evolvePokemon(id) {
+        console.log(id);
+        window.scrollTo(0, 0);
+        document.body.classList.add("stop-scrolling");
+        let html = `<div class="askDiv" id="askDivEvolve">
+        <button id="closeButton"><img id="closeWindowTeam" src="./svg/cross.svg" alt="close window"></button>
+        <h2>Did you evolve this Pokémon? <br>
+            If so, what is its new CP?</h2>
+        <input class="form-control" id="newCP" placeholder="NEW CP" type="number">
+        <div class="askButtonContainer">
+            <div class="askButton" id="askButtonYes">
+                <h3>
+                    YES
+                </h3>
+            </div>
+        </div>
+        <div class="askButtonContainer">
+            <div class="askButton" id="askButtonNo">
+                <h3>
+                    NO
+                </h3>
+            </div>
+        </div>
+    </div>`;
+        document.getElementById('overlayMyTeam').innerHTML = html;
+        document.getElementById('newCP').value = '';
+        document.getElementById('overlayMyTeam').style.display = 'block';
+
+        document.getElementById('closeButton').addEventListener('click', function () {
+            closeOverlay();
+        });
+        document.getElementById('askButtonNo').addEventListener('click', function () {
+            closeOverlay();
+        });
+    }
+
+    async function powerUpPokemon(id) {
+        console.log(id);
+        window.scrollTo(0, 0);
+        document.body.classList.add("stop-scrolling");
+        let html = `<div class="askDiv" id="askDivPowerUp">
+        <button id="closeButton"><img id="closeWindowTeam" src="./svg/cross.svg" alt="close window"></button>
+        <h2>Did you power up this Pokémon? <br>
+            If so, what is its new CP?</h2>
+        <input class="form-control" id="newCP" placeholder="NEW CP" type="number">
+        <div class="askButtonContainer">
+            <div class="askButton" id="askButtonYes">
+                <h3>
+                    YES
+                </h3>
+            </div>
+        </div>
+        <div class="askButtonContainer">
+            <div class="askButton" id="askButtonNo">
+                <h3>
+                    NO
+                </h3>
+            </div>
+        </div>
+    </div>`;
+        document.getElementById('overlayMyTeam').innerHTML = html;
+        document.getElementById('newCP').value = '';
+        document.getElementById('overlayMyTeam').style.display = 'block';
+
+        document.getElementById('askButtonYes').addEventListener('click', async function () {
+            let cp = document.getElementById('newCP').value;
+            await updatePokemon(id, cp);
+            window.location.href = 'https://web2-course-project-site-tv.herokuapp.com/myTeam.html'
+        });
+        document.getElementById('closeButton').addEventListener('click', function () {
+            closeOverlay();
+        });
+        document.getElementById('askButtonNo').addEventListener('click', function () {
+            closeOverlay();
+        });
+    }
+
+    function closeOverlay() {
+        document.getElementById('overlayMyTeam').style.display = 'none';
+        document.body.classList.remove("stop-scrolling");
 
     }
 
