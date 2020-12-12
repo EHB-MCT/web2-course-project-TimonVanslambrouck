@@ -348,7 +348,11 @@ window.onload = () => {
         let url = `https://web2-course-project-api-tv.herokuapp.com/${id}`
         if (confirm("Are you sure you want to delete this pokemon?")) {
             await fetch(url, {
-                method: "DELETE"
+                method: "DELETE",
+                body: '',
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
             });
         }
     }
