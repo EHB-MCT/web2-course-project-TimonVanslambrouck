@@ -183,11 +183,13 @@ a:link {
 .inputScreen {
     border: solid black 1px;
     position: absolute;
-    top: 10%;
-    left: 36%;
+    top: 50%;
+    left: 50%;
     background-color: white;
     width: 528px;
     height: 606px;
+    margin-left: calc(-528px/2);
+    margin-top: calc(-606px/2);
 }
 
 #closeWindow {
