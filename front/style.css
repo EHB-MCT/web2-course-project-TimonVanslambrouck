@@ -319,7 +319,7 @@ a:link {
 }
 
 #backButton {
-    padding: 5px 100px;
+    padding: 5px 3%;
     background-color: #5296A1;
     color: white;
     text-transform: uppercase;
@@ -330,20 +330,12 @@ a:link {
     border-radius: 50px;
 }
 
-#backArrow {
-    margin-left: -80px;
-}
-
-#back {
-    margin-left: 60px;
-}
-
 .ivBar {
     width: 50%;
 }
 
 #deleteButton {
-    padding: 5px 100px;
+    padding: 5px 3%;
     background-color: #4DAC8C;
     color: white;
     text-transform: uppercase;

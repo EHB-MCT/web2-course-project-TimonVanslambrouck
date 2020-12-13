@@ -309,7 +309,7 @@ window.onload = () => {
             shiny = 'Yes';
         }
         let htmlString =
-            `<a id="backButton" href="./myTeam.html"><img id="backArrow" src="./svg/arrow.svg"><span id="back">Back</span></a>
+            `<a id="backButton" href="./myTeam.html">Back</a>
             <a id="deleteButton" href="#">Delete</a>
             <div class="firstColumn">
         <h2>CP:</h2>
