@@ -400,6 +400,7 @@ a:link {
     margin-left: 25%;
     margin-bottom: 5%;
     width: 50%;
+    -moz-appearance: textfield;
 }
 
 .askButtonContainer {

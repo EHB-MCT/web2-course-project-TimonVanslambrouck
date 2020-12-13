@@ -432,9 +432,6 @@ window.onload = () => {
         document.getElementById('askButtonYes').addEventListener('click', async function () {
             let cp = document.getElementById('newCP').value;
             await updatePokemon(id, cp);
-            setTimeout(function () {
-                window.location.href = 'https://web2-course-project-site-tv.herokuapp.com/myTeam.html';
-            }, 1);
         });
         document.getElementById('closeButton').addEventListener('click', function () {
             closeOverlay();
@@ -469,18 +466,58 @@ window.onload = () => {
     }
 
     async function updatePokemon(id, cp) {
-        const url = `https://web2-course-project-api-tv.herokuapp.com/api/pokemon/${id}`;
-        console.log(url);
-        const data = {
-            "cp": `${cp}`
-        };
-        await fetch(url, {
-            method: "PUT",
-            body: JSON.stringify(data),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
+        if (await checkCP(id)) {
+            const url = `https://web2-course-project-api-tv.herokuapp.com/api/pokemon/${id}`;
+            console.log(url);
+            const data = {
+                "cp": `${cp}`
+            };
+            await fetch(url, {
+                method: "PUT",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            });
+            setTimeout(function () {
+                window.location.href = 'https://web2-course-project-site-tv.herokuapp.com/myTeam.html';
+            }, 1);
+        } else {
+            return window.alert('please enter valid CP!');
+        }
+    }
+
+    async function checkCP(id) {
+        let newCP = document.getElementById('newCP').value;
+        const respPokemon = await fetch(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon/${id}`);
+        const dataPokemon = await respPokemon.json();
+        let oldCP = dataPokemon[0].cp;
+        let form = dataPokemon[0].form;
+        let maxCP = 5000;
+
+        if (newCP <= 0 || newCP > 6000 || newCP === '' || newCP <= oldCP) {
+            return false
+        }
+        const resp = await fetch("https://pokemon-go1.p.rapidapi.com/pokemon_max_cp.json", {
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-key": "9d0a09fc10mshe5a93973c23a87ap12761ajsndf646d78f6f5",
+                "x-rapidapi-host": "pokemon-go1.p.rapidapi.com"
             }
         });
+        const data = await resp.json();
+        for (let pokemonId in data) {
+            if (data[pokemonId].pokemon_id === id && data[pokemonId].form === form) {
+                maxCP = data[pokemonId].max_cp;
+                break
+            }
+        }
+
+        if (newCP > maxCP) {
+            return false;
+        }
+        return true;
+
     }
 
     // https://stackoverflow.com/questions/1026069/how-do-i-make-the-first-letter-of-a-string-uppercase-in-javascript
