@@ -304,6 +304,11 @@ a:link {
     margin-top: 12%;
 }
 
+.thirdColumn h3 {
+    margin-top: 5%;
+    margin-bottom: 0;
+}
+
 .thirdColumn {
     text-align: center;
 }
@@ -315,7 +320,8 @@ a:link {
 }
 
 #smallImage {
-    width: 50%;
+    width: 30vh;
+    height: 30vh;
 }
 
 #backButton {

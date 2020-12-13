@@ -35,6 +35,7 @@ window.onload = () => {
         const resp = await fetch(url);
         const data = await resp.json();
         apiData = data;
+        console.log(apiData);
         let htmlStringTotal = '';
         let htmlString = '';
         let pokemonObject = '';
@@ -337,14 +338,25 @@ window.onload = () => {
     </div> `;
 
         if (pokemonData.evolution !== 0) {
-            let evolution = pokemonData.evolution[0];
-            htmlString += `<div class="thirdColumn">
+            if (pokemonData.evolution[0].item_required !== undefined) {
+                let evolution = pokemonData.evolution[0];
+                htmlString += `<div class="thirdColumn">
+        <h2>Evolution:</h2>
+        <h1>${evolution.pokemon_name}</h1>
+        <img id="smallImage" src="https://pokeres.bastionbot.org/images/pokemon/${evolution.pokemon_id}.png" alt="picture of ${evolution.pokemon_name}">
+        <h3>${evolution.candy_required} Candies + ${evolution.item_required}</h3>
+        <button id="evolveButton">EVOLVE</button>
+        </div>`
+            } else {
+                let evolution = pokemonData.evolution[0];
+                htmlString += `<div class="thirdColumn">
         <h2>Evolution:</h2>
         <h1>${evolution.pokemon_name}</h1>
         <img id="smallImage" src="https://pokeres.bastionbot.org/images/pokemon/${evolution.pokemon_id}.png" alt="picture of ${evolution.pokemon_name}">
         <h3>${evolution.candy_required} Candies</h3>
         <button id="evolveButton">EVOLVE</button>
         </div>`
+            }
         } else {
             htmlString += `<div class="thirdColumn">
         <h2> No Evolution</h2>
