@@ -284,7 +284,7 @@ a:link {
 .firstColumn {
     display: grid;
     grid-template-columns: 1fr 3fr;
-    grid-template-rows: repeat(7, 12%);
+    grid-template-rows: repeat(7, 8vh);
     text-align: center;
     overflow: hidden;
 }
@@ -309,8 +309,9 @@ a:link {
 }
 
 #bigImage {
-    margin-top: 10%;
-    width: 80%;
+    width: 50vh;
+    height: 50vh;
+    margin: 0 5%;
 }
 
 #smallImage {
@@ -376,11 +377,13 @@ a:link {
     text-align: center;
     border: solid black 1px;
     position: absolute;
-    top: 25%;
-    left: 36%;
+    top: 50%;
+    left: 50%;
     background-color: white;
     width: 528px;
     height: 265px;
+    margin-left: calc(-528px/2);
+    margin-top: calc(-256px/2);
 }
 
 .askDiv h2 {
@@ -435,7 +438,7 @@ a:link {
 
 #powerUpButton {
     margin-top: 5%;
-    width: 150px;
+    width: 170px;
     background-color: #4DAC8C;
     color: white;
     padding: 10px 40px;
