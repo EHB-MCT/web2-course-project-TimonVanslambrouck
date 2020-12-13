@@ -493,6 +493,7 @@ window.onload = () => {
         const dataPokemon = await respPokemon.json();
         let oldCP = dataPokemon[0].cp;
         let form = dataPokemon[0].form;
+        let selectedID = dataPokemon[0].id;
         let maxCP = 5000;
 
         if (newCP <= 0 || newCP > 6000 || newCP === '' || newCP <= oldCP) {
@@ -506,8 +507,10 @@ window.onload = () => {
             }
         });
         const data = await resp.json();
+
         for (let pokemonId in data) {
-            if (data[pokemonId].pokemon_id === id && data[pokemonId].form === form) {
+            console.log(data[pokemonId].pokemon_id, selectedID)
+            if (data[pokemonId].pokemon_id === selectedID && data[pokemonId].form === form) {
                 maxCP = data[pokemonId].max_cp;
                 break
             }
