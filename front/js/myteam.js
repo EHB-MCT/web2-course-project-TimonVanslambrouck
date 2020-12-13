@@ -407,7 +407,7 @@ window.onload = () => {
 
     async function evolvePokemon(id) {
         console.log('evolve');
-        if (await checkCP(id)) {
+        if (await checkCP(id, true)) {
             const resp = await fetch(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon/${id}`);
             const data = await resp.json();
             let currentPokemon = data[0];
@@ -569,7 +569,7 @@ window.onload = () => {
     }
 
     async function updatePokemon(id, cp) {
-        if (await checkCP(id)) {
+        if (await checkCP(id, false)) {
             const url = `https://web2-course-project-api-tv.herokuapp.com/api/pokemon/${id}`;
             console.log(url);
             const data = {
@@ -590,15 +590,19 @@ window.onload = () => {
         }
     }
 
-    async function checkCP(id) {
+    async function checkCP(id, isAnEvolution) {
         let newCP = document.getElementById('newCP').value;
         const respPokemon = await fetch(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon/${id}`);
         const dataPokemon = await respPokemon.json();
         let oldCP = dataPokemon[0].cp;
         let form = dataPokemon[0].form;
         let selectedID = dataPokemon[0].id;
+        if (isAnEvolution) {
+            selectedID = dataPokemon[0].evolution[0].pokemon_id
+        }
         let maxCP = 5000;
-
+        newCP = newCP * 1;
+        oldCP = oldCP * 1;
         if (newCP <= 0 || newCP > 6000 || newCP === '' || newCP <= oldCP) {
             return false
         }
@@ -610,10 +614,11 @@ window.onload = () => {
             }
         });
         const data = await resp.json();
-
         for (let pokemonId in data) {
             if (data[pokemonId].pokemon_id === selectedID && data[pokemonId].form === form) {
+                console.log(data[pokemonId].pokemon_id, selectedID);
                 maxCP = data[pokemonId].max_cp;
+                console.log(maxCP);
                 break
             }
         }
