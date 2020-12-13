@@ -359,14 +359,14 @@ window.onload = () => {
         });
         if (pokemonData.evolution !== 0) {
             document.getElementById('evolveButton').addEventListener('click', function () {
-                evolvePokemon(id);
+                evolvePokemonOverlay(id);
             });
         }
         document.getElementById('specificPokemon').style.display = 'grid';
 
     }
 
-    async function evolvePokemon(id) {
+    async function evolvePokemonOverlay(id) {
         console.log(id);
         window.scrollTo(0, 0);
         document.body.classList.add("stop-scrolling");
@@ -400,6 +400,109 @@ window.onload = () => {
         document.getElementById('askButtonNo').addEventListener('click', function () {
             closeOverlay();
         });
+        document.getElementById('askButtonYes').addEventListener('click', function () {
+            evolvePokemon(id);
+        });
+    }
+
+    async function evolvePokemon(id) {
+        console.log('evolve');
+        if (await checkCP(id)) {
+            const resp = await fetch(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon/${id}`);
+            const data = await resp.json();
+            let currentPokemon = data[0];
+            let evolution = await getEvoltuions(currentPokemon.evolution[0].pokemon_id, currentPokemon.form);
+            let typeList = await getTypeEvolution(currentPokemon.evolution[0].pokemon_name.toLowerCase());
+            let distance = await getBuddyDistance(currentPokemon.evolution[0].pokemon_id);
+
+            let evolutionPokemon = {
+                _id: currentPokemon._id,
+                id: currentPokemon.evolution[0].pokemon_id,
+                name: currentPokemon.evolution[0].pokemon_name,
+                form: currentPokemon.form,
+                type: typeList,
+                shiny: currentPokemon.shiny,
+                cp: `${document.getElementById('newCP').value}`,
+                evolution: evolution,
+                distance: distance,
+                picture: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${currentPokemon.evolution[0].pokemon_id}.png`,
+                attack: currentPokemon.attack,
+                defense: currentPokemon.defense,
+                hp: currentPokemon.hp
+            }
+            let url = `https://web2-course-project-api-tv.herokuapp.com/api/pokemon/${currentPokemon._id}`;
+
+            console.log(JSON.stringify(evolutionPokemon));
+
+            await fetch(url, {
+                method: "PATCH",
+                body: JSON.stringify(evolutionPokemon),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            });
+            setTimeout(function () {
+                window.location.href = 'https://web2-course-project-site-tv.herokuapp.com/myTeam.html';
+            }, 1);
+        } else {
+            return window.alert('please enter valid CP!');
+        }
+    }
+
+    async function getBuddyDistance(id) {
+        let distance = 0;
+        const resp = await fetch("https://pokemon-go1.p.rapidapi.com/pokemon_buddy_distances.json", {
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-key": "9d0a09fc10mshe5a93973c23a87ap12761ajsndf646d78f6f5",
+                "x-rapidapi-host": "pokemon-go1.p.rapidapi.com"
+            }
+        });
+        const data = await resp.json();
+        for (pokemonId in data) {
+            data[pokemonId].forEach(pokemon => {
+                if (distance !== 0) {
+                    return distance;
+                }
+                if (pokemon.pokemon_id == id) {
+                    distance = pokemon.distance;
+                    return distance;
+                }
+            });
+        }
+        return distance;
+    }
+
+    async function getTypeEvolution(name) {
+        let list = [];
+        console.log(name)
+        const data = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
+        const resp = await data.json();
+        let types = resp.types
+        for (let id in types) {
+            let type = types[id].type.name;
+            list.push(capitalizeFirstLetter(type));
+        }
+        return list;
+    }
+
+    async function getEvoltuions(id, form) {
+        let evolutions = 0;
+        const resp = await fetch("https://pokemon-go1.p.rapidapi.com/pokemon_evolutions.json", {
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-key": "9d0a09fc10mshe5a93973c23a87ap12761ajsndf646d78f6f5",
+                "x-rapidapi-host": "pokemon-go1.p.rapidapi.com"
+            }
+        });
+        const data = await resp.json();
+        for (let pokemonId in data) {
+            if (data[pokemonId].pokemon_id === id && data[pokemonId].form === form) {
+                evolutions = data[pokemonId].evolutions;
+                return evolutions
+            }
+        }
+        return evolutions
     }
 
     async function powerUpPokemon(id) {
@@ -509,7 +612,6 @@ window.onload = () => {
         const data = await resp.json();
 
         for (let pokemonId in data) {
-            console.log(data[pokemonId].pokemon_id, selectedID)
             if (data[pokemonId].pokemon_id === selectedID && data[pokemonId].form === form) {
                 maxCP = data[pokemonId].max_cp;
                 break
