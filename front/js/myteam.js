@@ -414,6 +414,10 @@ window.onload = () => {
             let evolution = await getEvoltuions(currentPokemon.evolution[0].pokemon_id, currentPokemon.form);
             let typeList = await getTypeEvolution(currentPokemon.evolution[0].pokemon_name.toLowerCase());
             let distance = await getBuddyDistance(currentPokemon.evolution[0].pokemon_id);
+            let picture = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${currentPokemon.evolution[0].pokemon_id}.png`;
+            if (currentPokemon.shiny === 1) {
+                picture = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${currentPokemon.evolution[0].pokemon_id}.png`;
+            }
 
             let evolutionPokemon = {
                 _id: currentPokemon._id,
@@ -425,7 +429,7 @@ window.onload = () => {
                 cp: `${document.getElementById('newCP').value}`,
                 evolution: evolution,
                 distance: distance,
-                picture: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${currentPokemon.evolution[0].pokemon_id}.png`,
+                picture: picture,
                 attack: currentPokemon.attack,
                 defense: currentPokemon.defense,
                 hp: currentPokemon.hp
