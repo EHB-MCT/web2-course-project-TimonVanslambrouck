@@ -107,11 +107,37 @@ window.onload = () => {
                 "Content-type": "application/json; charset=UTF-8"
             }
         });
-        window.alert('Pokémon has been added!');
+        let html = `<div class="askDiv" id="askDivAdded" >
+        <button id="closeButton"><img id="closeWindowTeam" src="./svg/cross.svg" alt="close window"></button>
+        <h2>Pokemon added! <br> Would you like to keep adding Pokémon <br>
+        or go to your team?</h2>
+        <div class="askButtonContainer">
+            <div class="askButton" id="askButtonYes">
+                <h3>
+                GO TO MY TEAM
+                </h3>
+            </div>
+        </div>
+        <div class="askButtonContainer">
+            <div class="askButton" id="askButtonNo">
+                <h3>
+                KEEP ADDING                    
+                </h3>
+            </div>
+        </div>
+    </div>`;
+        document.getElementById('overlay').innerHTML = html;
 
+        document.getElementById('closeButton').addEventListener('click', function () {
+            closeOverlay();
+        });
+        document.getElementById('askButtonNo').addEventListener('click', function () {
+            closeOverlay();
+        });
+        document.getElementById('askButtonYes').addEventListener('click', function () {
+            window.location.href = 'https://web2-course-project-site-tv.herokuapp.com/myTeam.html';
+        });
 
-
-        closeOverlay();
     }
 
     async function getPokemon(id) {
