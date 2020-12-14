@@ -299,7 +299,6 @@ a:link {
     grid-template-rows: 10% 8fr 1fr;
     align-items: center;
     justify-items: center;
-    overflow: hidden;
 }
 
 .thirdColumn {
@@ -309,6 +308,15 @@ a:link {
     overflow: hidden;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr 5fr 1fr 1fr;
+}
+
+.thirdColumnNoEvolution {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    overflow: hidden;
+    grid-template-columns: 1fr;
+    grid-template-rows: 50vh;
 }
 
 .firstColumn h2,
@@ -457,6 +465,10 @@ a:link {
 .askButton h3 {
     font-size: 20px;
     margin: 0;
+}
+
+.powerUpButtonNoEvolution {
+    margin-top: 15px;
 }
 
 #powerUpButton {
