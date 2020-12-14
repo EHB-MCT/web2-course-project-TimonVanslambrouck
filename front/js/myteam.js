@@ -456,10 +456,7 @@ window.onload = () => {
                 headers: {
                     "Content-type": "application/json; charset=UTF-8"
                 }
-            });
-            setTimeout(function () {
-                window.location.href = 'https://web2-course-project-site-tv.herokuapp.com/myTeam.html';
-            }, 1);
+            }).then(window.location.href = 'https://web2-course-project-site-tv.herokuapp.com/myTeam.html');
         } else {
             return window.alert('please enter valid CP!');
         }

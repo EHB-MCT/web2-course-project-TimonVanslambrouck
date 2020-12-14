@@ -145,7 +145,7 @@ pokeRouter.route('/pokemon/:pokemonId').get((req, res) => {
             .then(updatedDocument => {
                 return res.sendStatus(200);
             })
-            .catch(err => console.error(`Failed to find and update document: ${err}`))
+            .catch(err => console.error(`Error: ${err}`))
 
     })
     .delete((req, res) => {
@@ -173,4 +173,18 @@ app.listen(port, () => {
         db = client.db(DB_NAME);
         console.log(`Connected to database: ${DB_NAME}`);
     });
+})
+
+pokeRouter.route('/createUser').post((req, res) => {
+    collection = db.collection("pokemon");
+    let user = {
+        user: "Jos",
+        pwd: "Test",
+        customData: {
+            test: "test"
+        },
+        roles: []
+    };
+    collection.createUser(user);
+    res.send('Data has been sent to collection');
 })
