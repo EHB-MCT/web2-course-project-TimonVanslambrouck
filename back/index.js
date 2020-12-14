@@ -107,6 +107,7 @@ pokeRouter.route('/pokemon/:pokemonId').get((req, res) => {
             _id: ObjectId(req.params.pokemonId)
         }
 
+        // SOURCE: https://docs.mongodb.com/manual/reference/method/db.collection.findOneAndUpdate/
         const update = {
             "$set": {
                 "cp": req.body.cp
@@ -175,16 +176,16 @@ app.listen(port, () => {
     });
 })
 
-pokeRouter.route('/createUser').post((req, res) => {
-    collection = db.collection("pokemon");
-    let user = {
-        user: "Jos",
-        pwd: "Test",
-        customData: {
-            test: "test"
-        },
-        roles: []
-    };
-    collection.createUser(user);
-    res.send('Data has been sent to collection');
-})
+// pokeRouter.route('/createUser')
+//     .post((req, res) => {
+//         let user = {
+//             user: "Jos",
+//             pwd: "Test",
+//             customData: {
+//                 test: "test"
+//             },
+//             roles: []
+//         };
+//         db.createUser(user);
+//         res.send('Data has been sent to collection');
+//     })
