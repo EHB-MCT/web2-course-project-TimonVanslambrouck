@@ -18,6 +18,9 @@ window.onload = () => {
     document.getElementById('sorts').value = 'sort';
     document.getElementById('nameSearch').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
+            document.getElementById('pokemonDisplay').innerHTML = `<div class="spinner-grow" role="status">
+            <span class="sr-only">Loading...</span>
+            </div>`;
             searchName();
         }
     });
