@@ -344,7 +344,7 @@ window.onload = () => {
         <h2>Evolution:</h2>
         <h1>${evolution.pokemon_name}</h1>
         <img id="smallImage" src="https://pokeres.bastionbot.org/images/pokemon/${evolution.pokemon_id}.png" alt="picture of ${evolution.pokemon_name}">
-        <h3>${evolution.candy_required} Candies + ${evolution.item_required}</h3>
+        <h2>${evolution.candy_required} Candies + ${evolution.item_required}</h2>
         <button id="evolveButton">EVOLVE</button>
         </div>`
             } else {
@@ -456,7 +456,10 @@ window.onload = () => {
                 headers: {
                     "Content-type": "application/json; charset=UTF-8"
                 }
-            }).then(window.location.href = 'https://web2-course-project-site-tv.herokuapp.com/myTeam.html');
+            });
+            setTimeout(function () {
+                window.location.href = 'https://web2-course-project-site-tv.herokuapp.com/myTeam.html';
+            }, 1);
         } else {
             return window.alert('please enter valid CP!');
         }

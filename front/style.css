@@ -281,20 +281,41 @@ a:link {
     text-transform: uppercase;
     font-size: 28px;
     font-weight: bold;
+    margin: 0;
 }
 
 .firstColumn {
     display: grid;
     grid-template-columns: 1fr 3fr;
-    grid-template-rows: repeat(7, 8vh);
-    text-align: center;
+    grid-template-rows: repeat(9, 1fr);
+    align-items: center;
+    justify-items: center;
     overflow: hidden;
+}
+
+.secondColumn {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 10% 8fr 1fr;
+    align-items: center;
+    justify-items: center;
+    overflow: hidden;
+}
+
+.thirdColumn {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    overflow: hidden;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 5fr 1fr 1fr;
 }
 
 .firstColumn h2,
 .secondColumn h2,
 .thirdColumn h2 {
     font-size: 24px;
+    margin: 0;
 }
 
 .firstColumn,
@@ -307,8 +328,8 @@ a:link {
 }
 
 .thirdColumn h3 {
-    margin-top: 5%;
-    margin-bottom: 0;
+    margin-top: 2.5%;
+    margin-bottom: 2.5;
 }
 
 .thirdColumn {
@@ -316,13 +337,10 @@ a:link {
 }
 
 #bigImage {
-    width: 50vh;
-    height: 50vh;
-    margin: 0 5%;
+    width: 40vh;
 }
 
 #smallImage {
-    width: 30vh;
     height: 30vh;
 }
 
@@ -340,7 +358,7 @@ a:link {
 
 .ivBar {
     height: 100%;
-    width: 80%;
+    width: 100%;
 }
 
 #deleteButton {
@@ -356,8 +374,7 @@ a:link {
 }
 
 #evolveButton {
-    margin-top: 5%;
-    width: 12-30px;
+    width: 170px;
     background-color: #4DAC8C;
     color: white;
     padding: 10px 40px;
@@ -448,7 +465,6 @@ a:link {
 }
 
 #powerUpButton {
-    margin-top: 5%;
     width: 170px;
     background-color: #4DAC8C;
     color: white;
@@ -529,5 +545,12 @@ a:link {
     #sorts,
     #types {
         margin-top: 5%;
+    }
+}
+
+
+@media only screen and (max-height: 550px) {
+    .ivBar {
+        width: 80%;
     }
 }
