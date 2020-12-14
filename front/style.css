@@ -339,7 +339,8 @@ a:link {
 }
 
 .ivBar {
-    width: 50%;
+    height: 100%;
+    width: 80%;
 }
 
 #deleteButton {
