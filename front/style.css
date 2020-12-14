@@ -384,7 +384,12 @@ a:link {
     width: 528px;
     height: 265px;
     margin-left: calc(-528px/2);
-    margin-top: calc(-256px/2);
+    margin-top: calc(-265px/2);
+}
+
+#askDivDelete {
+    height: 215px;
+    margin-top: calc(-215px/2);
 }
 
 .askDiv h2 {

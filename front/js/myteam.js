@@ -92,7 +92,7 @@ window.onload = () => {
             }
             if (document.getElementById(`deleteImage${pokemonObjectId}`) !== null) {
                 document.getElementById(`deleteImage${pokemonObjectId}`).addEventListener('click', function () {
-                    deletePokemon(pokemonObjectId, pokemonName);
+                    deletePokemonOverlay(pokemonObjectId, pokemonName);
                 });
             }
         }
@@ -364,7 +364,7 @@ window.onload = () => {
         }
         document.getElementById('specificPokemon').innerHTML = htmlString;
         document.getElementById('deleteButton').addEventListener('click', function () {
-            deletePokemon(id, name);
+            deletePokemonOverlay(id, name);
         });
         document.getElementById('powerUpButton').addEventListener('click', function () {
             powerUpPokemon(id);
@@ -563,14 +563,45 @@ window.onload = () => {
 
     }
 
-    async function deletePokemon(id, name) {
+    async function deletePokemonOverlay(id, name) {
+        let html = `<div class="askDiv" id="askDivDelete" >
+        <button id="closeButton"><img id="closeWindowTeam" src="./svg/cross.svg" alt="close window"></button>
+        <h2>Are you sure you want <br> to delete ${name}?</h2>
+        <div class="askButtonContainer">
+            <div class="askButton" id="askButtonYes">
+                <h3>
+                    YES
+                </h3>
+            </div>
+        </div>
+        <div class="askButtonContainer">
+            <div class="askButton" id="askButtonNo">
+                <h3>
+                    NO
+                </h3>
+            </div>
+        </div>
+    </div>`;
+        document.getElementById('overlayMyTeam').innerHTML = html;
+        document.getElementById('overlayMyTeam').style.display = 'block';
+
+        document.getElementById('closeButton').addEventListener('click', function () {
+            closeOverlay();
+        });
+        document.getElementById('askButtonNo').addEventListener('click', function () {
+            closeOverlay();
+        });
+        document.getElementById('askButtonYes').addEventListener('click', function () {
+            deletePokemon(id);
+        });
+    }
+
+    async function deletePokemon(id) {
         let url = `https://web2-course-project-api-tv.herokuapp.com/api/pokemon/${id}`;
-        if (confirm(`Are you sure you want to delete ${name}?`)) {
-            await fetch(url, {
-                method: "DELETE"
-            });
-            window.location.href = 'https://web2-course-project-site-tv.herokuapp.com/myTeam.html'
-        }
+        await fetch(url, {
+            method: "DELETE"
+        });
+        window.location.href = 'https://web2-course-project-site-tv.herokuapp.com/myTeam.html'
     }
 
     function searchName() {
