@@ -431,11 +431,12 @@ window.onload = () => {
             const resp = await fetch(`https://web2-course-project-api-tv.herokuapp.com/api/pokemon/${id}`);
             const data = await resp.json();
             let currentPokemon = data[0];
+            console.log(currentPokemon.shiny);
             let evolution = await getEvoltuions(currentPokemon.evolution[0].pokemon_id, currentPokemon.form);
             let typeList = await getTypeEvolution(currentPokemon.evolution[0].pokemon_name.toLowerCase());
             let distance = await getBuddyDistance(currentPokemon.evolution[0].pokemon_id);
             let picture = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${currentPokemon.evolution[0].pokemon_id}.png`;
-            if (currentPokemon.shiny === 1) {
+            if (currentPokemon.shiny == 1) {
                 picture = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${currentPokemon.evolution[0].pokemon_id}.png`;
             }
 
