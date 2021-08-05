@@ -23,10 +23,10 @@ const ObjectId = require('mongodb').ObjectID;
 
 // BODYPARSER
 
-app.use(bodyParser.urlencoded({
+app.use(express.urlencoded({
     extended: true
 }));
-app.use(bodyParser.json());
+app.use(express.json());
 
 /* 
     GET /pokemon = Get all pokemon
@@ -108,6 +108,7 @@ pokeRouter.route('/pokemon/:pokemonId').get((req, res) => {
         }
 
         // SOURCE: https://docs.mongodb.com/manual/reference/method/db.collection.findOneAndUpdate/
+        // Sets the value of a field in a document
         const update = {
             "$set": {
                 "cp": req.body.cp
@@ -175,17 +176,3 @@ app.listen(port, () => {
         console.log(`Connected to database: ${DB_NAME}`);
     });
 })
-
-// pokeRouter.route('/createUser')
-//     .post((req, res) => {
-//         let user = {
-//             user: "Jos",
-//             pwd: "Test",
-//             customData: {
-//                 test: "test"
-//             },
-//             roles: []
-//         };
-//         db.createUser(user);
-//         res.send('Data has been sent to collection');
-//     })

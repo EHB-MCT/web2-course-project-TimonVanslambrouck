@@ -338,12 +338,12 @@ window.onload = () => {
                 let evolution = pokemonData.evolution[0];
                 htmlString += `<div class="secondColumn">
                 <h1 id="">${name}</h1>
-                <img id="bigImage" src="https://pokeres.bastionbot.org/images/pokemon/${pictureId}.png" alt="picture of ${name}">
+                <img id="bigImage" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pictureId}.png" alt="picture of ${name}">
                 <button id="powerUpButton">POWER UP</button>
             </div><div class="thirdColumn">
         <h2>Evolution:</h2>
         <h1>${evolution.pokemon_name}</h1>
-        <img id="smallImage" src="https://pokeres.bastionbot.org/images/pokemon/${evolution.pokemon_id}.png" alt="picture of ${evolution.pokemon_name}">
+        <img id="smallImage" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${evolution.pokemon_id}.png" alt="picture of ${evolution.pokemon_name}">
         <h2>${evolution.candy_required} Candies + ${evolution.item_required}</h2>
         <button id="evolveButton">EVOLVE</button>
         </div>`
@@ -351,12 +351,12 @@ window.onload = () => {
                 let evolution = pokemonData.evolution[0];
                 htmlString += `<div class="secondColumn">
                 <h1 id="">${name}</h1>
-                <img id="bigImage" src="https://pokeres.bastionbot.org/images/pokemon/${pictureId}.png" alt="picture of ${name}">
+                <img id="bigImage" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pictureId}.png" alt="picture of ${name}">
                 <button id="powerUpButton">POWER UP</button>
             </div><div class="thirdColumn">
         <h2>Evolution:</h2>
         <h1>${evolution.pokemon_name}</h1>
-        <img id="smallImage" src="https://pokeres.bastionbot.org/images/pokemon/${evolution.pokemon_id}.png" alt="picture of ${evolution.pokemon_name}">
+        <img id="smallImage" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${evolution.pokemon_id}.png" alt="picture of ${evolution.pokemon_name}">
         <h3>${evolution.candy_required} Candies</h3>
         <button id="evolveButton">EVOLVE</button>
         </div>`
@@ -364,7 +364,7 @@ window.onload = () => {
         } else {
             htmlString += `<div class="secondColumn">
             <h1 id="">${name}</h1>
-            <img id="bigImage" src="https://pokeres.bastionbot.org/images/pokemon/${pictureId}.png" alt="picture of ${name}">
+            <img id="bigImage" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pictureId}.png" alt="picture of ${name}">
             <button class="powerUpButtonNoEvolution" id="powerUpButton">POWER UP</button>
         </div><div class="thirdColumnNoEvolution">
         <h2> No Evolution</h2>
